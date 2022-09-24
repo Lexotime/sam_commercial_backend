@@ -28,3 +28,20 @@ model Article {
   imageUrl String
   dimension String
 }
+model Commerciaux {
+  id       Int    @id @default(autoincrement())
+  login    String @unique
+  password String
+  role     String
+}
+
+model Client {
+  NrClient  Int    @id @default(autoincrement())
+  Nom       String
+  Adresse   String
+  Ville     String
+  Pays      String
+  Email     String @unique
+  Telephone Int
+  Remise    Int
+}
