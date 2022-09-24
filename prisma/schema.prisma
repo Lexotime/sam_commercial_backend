@@ -21,12 +21,23 @@ model Article {
   numeroArticle String      @unique
   designation   Designation @relation(fields: [designationId], references: [id])
   designationId Int
+<<<<<<< HEAD
   marque        String
   prixUnitaire  Int
   stock         Int
   epaisseur     Int
   imageUrl      String
   dimension     String
+=======
+  marque String
+  prixUnitaire Int
+  stock Int
+  epaisseur Int
+  imageUrl String
+  dimension String
+  commande ArticleOnCommande[]
+  livraison ArticleOnLivraison[]
+>>>>>>> 5ba41918062f96d31c533d65724984b11aed49f2
 }
 
 model Commerciaux {
@@ -34,6 +45,8 @@ model Commerciaux {
   login    String @unique
   password String
   role     String
+  bonLivraison BonLivraison[]
+  bonCommande BonCommande[]
 }
 
 model Client {
@@ -46,10 +59,59 @@ model Client {
   Email     String @unique
   Telephone Int
   Remise    Int
+  bonCommande BonCommande[]
+  bonLivraison BonLivraison[]
 }
 
+<<<<<<< HEAD
 model Facture {
   id            Int      @id @default(autoincrement())
   Numerofacture Int      @unique
   Datecreation  DateTime @default(now())
 }
+=======
+model BonCommande {
+  id Int @default(autoincrement()) @id
+  numeroCommande String @unique
+  date DateTime @default(now())
+  client Client @relation(fields: [clientId], references: [NrClient])
+  clientId Int
+  articles ArticleOnCommande[]
+  bonLivraison BonLivraison[]
+  commerciauxId Int
+  commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
+}
+
+model ArticleOnCommande {
+  article Article @relation(fields: [articleId], references: [id])
+  articleId Int
+  bonCommande BonCommande @relation(fields: [commandeId], references: [id])
+  commandeId Int
+  quantite Int
+  observation String
+  @@id([articleId, commandeId])
+}
+
+model BonLivraison {
+  id Int @default(autoincrement()) @id
+  numeroLivraison String @unique
+  date DateTime @default(now())
+  chauffeur String
+  bonCommande BonCommande @relation(fields: [bonCommandeId], references: [id])
+  bonCommandeId Int
+  client Client @relation(fields: [clientId], references: [NrClient])
+  clientId Int
+  articles ArticleOnLivraison[]
+  commerciauxId Int
+  commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
+}
+
+model ArticleOnLivraison {
+  article Article @relation(fields: [articleId], references: [id])
+  articleId Int
+  bonLivraison BonLivraison @relation(fields: [livraisonId], references: [id])
+  livraisonId Int
+  quantite Int
+  @@id([articleId, livraisonId])
+}
+>>>>>>> 5ba41918062f96d31c533d65724984b11aed49f2
