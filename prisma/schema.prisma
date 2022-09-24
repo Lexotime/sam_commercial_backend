@@ -11,23 +11,24 @@ datasource db {
 }
 
 model Designation {
-  id Int @default(autoincrement()) @id
-  libelle String
+  id       Int       @id @default(autoincrement())
+  libelle  String
   articles Article[]
 }
 
 model Article {
-  id Int @default(autoincrement()) @id
-  numeroArticle String @unique
-  designation Designation @relation(fields: [designationId], references: [id])
+  id            Int         @id @default(autoincrement())
+  numeroArticle String      @unique
+  designation   Designation @relation(fields: [designationId], references: [id])
   designationId Int
-  marque String
-  prixUnitaire Int
-  stock Int
-  epaisseur Int
-  imageUrl String
-  dimension String
+  marque        String
+  prixUnitaire  Int
+  stock         Int
+  epaisseur     Int
+  imageUrl      String
+  dimension     String
 }
+
 model Commerciaux {
   id       Int    @id @default(autoincrement())
   login    String @unique
@@ -36,7 +37,8 @@ model Commerciaux {
 }
 
 model Client {
-  NrClient  Int    @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
+  Nrclient  String
   Nom       String
   Adresse   String
   Ville     String
@@ -44,4 +46,10 @@ model Client {
   Email     String @unique
   Telephone Int
   Remise    Int
+}
+
+model Facture {
+  id            Int      @id @default(autoincrement())
+  Numerofacture Int      @unique
+  Datecreation  DateTime @default(now())
 }
