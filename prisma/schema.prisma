@@ -9,3 +9,22 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Designation {
+  id Int @default(autoincrement()) @id
+  libelle String
+  articles Article[]
+}
+
+model Article {
+  id Int @default(autoincrement()) @id
+  numeroArticle String @unique
+  designation Designation @relation(fields: [designationId], references: [id])
+  designationId Int
+  marque String
+  prixUnitaire Int
+  stock Int
+  epaisseur Int
+  imageUrl String
+  dimension String
+}
