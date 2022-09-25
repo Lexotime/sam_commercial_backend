@@ -52,6 +52,14 @@ model Client {
   bonLivraison BonLivraison[]
 }
 
+model Facture{
+ id  Int @id @default(autoincrement())
+ Numerofacture String  @unique
+ CreatedDate DateTime @default(now())
+ bonlivraisonid String @unique
+ bonlivraison BonLivraison @relation(fields: [bonlivraisonid],references: [numeroLivraison])
+}
+
 model BonCommande {
   id Int @default(autoincrement()) @id
   numeroCommande String @unique
@@ -86,6 +94,7 @@ model BonLivraison {
   articles ArticleOnLivraison[]
   commerciauxId Int
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
+  facture Facture ?
 }
 
 model ArticleOnLivraison {
