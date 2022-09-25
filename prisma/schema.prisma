@@ -40,22 +40,23 @@ model Commerciaux {
 }
 
 model Client {
-  NrClient  Int    @id @default(autoincrement())
-  Nom       String
-  Adresse   String
-  Ville     String
-  Pays      String
-  Email     String @unique
-  Telephone Int
-  Remise    Int
+  id Int @id @default(autoincrement())
+  nrClient  String @unique
+  nom       String
+  adresse   String
+  ville     String
+  pays      String
+  email     String @unique
+  telephone Int
+  remise    Int
   bonCommande BonCommande[]
   bonLivraison BonLivraison[]
 }
 
 model Facture{
  id  Int @id @default(autoincrement())
- Numerofacture String  @unique
- CreatedDate DateTime @default(now())
+ numerofacture String  @unique
+ createdDate DateTime @default(now())
  bonlivraisonid String @unique
  bonlivraison BonLivraison @relation(fields: [bonlivraisonid],references: [numeroLivraison])
 }
@@ -64,8 +65,8 @@ model BonCommande {
   id Int @default(autoincrement()) @id
   numeroCommande String @unique
   date DateTime @default(now())
-  client Client @relation(fields: [clientId], references: [NrClient])
-  clientId Int
+  client Client @relation(fields: [clientId], references: [nrClient])
+  clientId String
   articles ArticleOnCommande[]
   bonLivraison BonLivraison[]
   commerciauxId Int
@@ -73,8 +74,8 @@ model BonCommande {
 }
 
 model ArticleOnCommande {
-  article Article @relation(fields: [articleId], references: [id])
-  articleId Int
+  article Article @relation(fields: [articleId], references: [numeroArticle])
+  articleId String
   bonCommande BonCommande @relation(fields: [commandeId], references: [numeroCommande])
   commandeId String
   quantite Int
@@ -89,8 +90,8 @@ model BonLivraison {
   chauffeur String
   bonCommande BonCommande @relation(fields: [bonCommandeId], references: [numeroCommande])
   bonCommandeId String
-  client Client @relation(fields: [clientId], references: [NrClient])
-  clientId Int
+  client Client @relation(fields: [clientId], references: [nrClient])
+  clientId String
   articles ArticleOnLivraison[]
   commerciauxId Int
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
