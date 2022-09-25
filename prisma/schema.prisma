@@ -56,7 +56,8 @@ model Facture{
  id  Int @id @default(autoincrement())
  Numerofacture String  @unique
  CreatedDate DateTime @default(now())
-bonlivraison BonLivraison?
+ bonlivraisonid String @unique
+ bonlivraison BonLivraison @relation(fields: [bonlivraisonid],references: [numeroLivraison])
 }
 
 model BonCommande {
@@ -93,8 +94,7 @@ model BonLivraison {
   articles ArticleOnLivraison[]
   commerciauxId Int
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
-  Nrfacture String  @unique
-  facture Facture @relation(fields: [Nrfacture],references: [Numerofacture])
+  facture Facture ?
 }
 
 model ArticleOnLivraison {
