@@ -67,8 +67,8 @@ model BonCommande {
 model ArticleOnCommande {
   article Article @relation(fields: [articleId], references: [id])
   articleId Int
-  bonCommande BonCommande @relation(fields: [commandeId], references: [id])
-  commandeId Int
+  bonCommande BonCommande @relation(fields: [commandeId], references: [numeroCommande])
+  commandeId String
   quantite Int
   observation String
   @@id([articleId, commandeId])
@@ -79,8 +79,8 @@ model BonLivraison {
   numeroLivraison String @unique
   date DateTime @default(now())
   chauffeur String
-  bonCommande BonCommande @relation(fields: [bonCommandeId], references: [id])
-  bonCommandeId Int
+  bonCommande BonCommande @relation(fields: [bonCommandeId], references: [numeroCommande])
+  bonCommandeId String
   client Client @relation(fields: [clientId], references: [NrClient])
   clientId Int
   articles ArticleOnLivraison[]
@@ -89,10 +89,10 @@ model BonLivraison {
 }
 
 model ArticleOnLivraison {
-  article Article @relation(fields: [articleId], references: [id])
-  articleId Int
-  bonLivraison BonLivraison @relation(fields: [livraisonId], references: [id])
-  livraisonId Int
+  article Article @relation(fields: [articleId], references: [numeroArticle])
+  articleId String
+  bonLivraison BonLivraison @relation(fields: [livraisonId], references: [numeroLivraison])
+  livraisonId String
   quantite Int
   @@id([articleId, livraisonId])
 }
