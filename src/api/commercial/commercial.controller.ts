@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Patch, Res } from '@nestjs/common';
 import { CommercialService } from './commercial.service';
 import {   editcomDto } from './dto';
 
@@ -8,23 +8,35 @@ export class CommercialController {
 
   
     @Get('get')
-    async getcommerciaux(){
-        return await this.comservice.getcommerciaux()
+    async getcommerciaux(@Res() res){
+        const commerciaux =await this.comservice.getcommerciaux()
+        return res.status(HttpStatus.OK).json({
+            commerciaux
+        })
     }
 
     @Get(':id')
-    async getcommercialbyid(@Param('id',ParseIntPipe) id:number){
-        return await this.comservice.getcommercialbyid(id)
+    async getcommercialbyid(@Param('id',ParseIntPipe) id:number,@Res() res){
+        const commercial =await this.comservice.getcommercialbyid(id)
+        return res.status(HttpStatus.OK).json({
+            commercial
+        })
     }
      
     @Patch(':id')
-    async update(@Param('id',ParseIntPipe) id:number,@Body() dto:editcomDto){
-        return await this.comservice.updatecommercial(id,dto)
+    async update(@Param('id',ParseIntPipe) id:number,@Body() dto:editcomDto,@Res() res){
+        const commercial= await this.comservice.updatecommercial(id,dto)
+        return res.status(HttpStatus.OK).json({
+            commercial
+        })
     }
     
     @Delete(':id')
-    async delete(@Param('id',ParseIntPipe) id:number){
-        return await this.comservice.deletecommercial(id)
+    async delete(@Param('id',ParseIntPipe) id:number,@Res() res){
+        const commercial= await this.comservice.deletecommercial(id)
+        return res.status(HttpStatus.OK).json({
+            commercial
+        })
     }
 
 }
