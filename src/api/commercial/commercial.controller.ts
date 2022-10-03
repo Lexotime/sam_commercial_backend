@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { CommercialService } from './commercial.service';
 import {   editcomDto } from './dto';
 
@@ -10,11 +10,6 @@ export class CommercialController {
     @Get('get')
     async getcommerciaux(){
         return await this.comservice.getcommerciaux()
-    }
-
-    @Post('login')
-    async getcommercial(@Body() dto:editcomDto){
-        return await this.comservice.getcommercial(dto)
     }
 
     @Get(':id')

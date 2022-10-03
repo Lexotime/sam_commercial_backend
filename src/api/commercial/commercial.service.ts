@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {  ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
 
 import {   editcomDto } from './dto';
@@ -12,7 +12,7 @@ export class CommercialService {
      try {
          const commerciaux= await this.prisma.commerciaux.findMany()
      if (!commerciaux){
-         return []
+         throw new ForbiddenException('pas de commerciaux')
      }
      return commerciaux
      } catch (error) {
@@ -20,24 +20,7 @@ export class CommercialService {
      }
       
  }
- async getcommercial(dto:editcomDto){
-     const commercial=await this.prisma.commerciaux.findUnique({
-         where:{
-             login:dto.login
-         }
-         })
-         if (!commercial){
-            throw new  ForbiddenException('credentials incorrect')
-         }
-         const pwpassword= commercial.password === dto.password
-       
-         if (!pwpassword){
-           throw new  ForbiddenException('credentials incorrect')
-         }
-         return commercial
-           
-    
- }
+ 
  async getcommercialbyid(id:number){
     try {
         const commerciaux= await this.prisma.commerciaux.findUnique({
@@ -47,11 +30,11 @@ export class CommercialService {
             }
         })
     if (!commerciaux){
-        return null
+        throw new ForbiddenException('commercial pas trouve')
     }
     return commerciaux
     } catch (error) {
-        throw new Error('commercial pas trouve') 
+        throw new Error(error) 
     }
      
 }
