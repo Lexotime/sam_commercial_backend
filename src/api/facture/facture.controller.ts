@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
 import { editfacturedto, factureDto } from './dto';
 import { FactureService } from './facture.service';
 
@@ -6,7 +6,7 @@ import { FactureService } from './facture.service';
 export class FactureController {
     constructor(private factureservice:FactureService){}
 
-    @Post('post')
+    @Post('creer')
     async createfacture(@Body() dto:factureDto,@Res() res){
       const facture= await this.factureservice.creerfacture(dto)
       return res.status(HttpStatus.OK).json({
@@ -25,6 +25,8 @@ export class FactureController {
     @Get(':id')
     async getbyid(@Param('id',ParseIntPipe) id:number,@Res() res){
         const facture= await this.factureservice.getfacturebyid(id)
+        if(!facture)
+        throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
         return res.status(HttpStatus.OK).json({
             facture
           })

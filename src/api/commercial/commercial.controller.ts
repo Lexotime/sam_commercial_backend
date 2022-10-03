@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Patch, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Res } from '@nestjs/common';
 import { CommercialService } from './commercial.service';
 import {   editcomDto } from './dto';
 
@@ -18,6 +18,8 @@ export class CommercialController {
     @Get(':id')
     async getcommercialbyid(@Param('id',ParseIntPipe) id:number,@Res() res){
         const commercial =await this.comservice.getcommercialbyid(id)
+        if (!commercial)
+        throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
         return res.status(HttpStatus.OK).json({
             commercial
         })

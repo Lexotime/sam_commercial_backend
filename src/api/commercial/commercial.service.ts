@@ -29,9 +29,7 @@ export class CommercialService {
             
             }
         })
-    if (!commerciaux){
-        throw new ForbiddenException('commercial pas trouve')
-    }
+   
     return commerciaux
     } catch (error) {
         throw new Error(error) 
