@@ -12,29 +12,29 @@ datasource db {
 
 model Designation {
   id Int @default(autoincrement()) @id
-  libelle String
+  libelle   String @db.VarChar(20)
   articles Article[]
 }
 
 model Article {
   id Int @default(autoincrement()) @id
-  numeroArticle String @unique
+  numeroArticle String @unique 
   designation Designation @relation(fields: [designationId], references: [id])
-  designationId Int
-  marque String
+  designationId Int 
+  marque String @db.VarChar(20)
   prixUnitaire Int
   stock Int
   epaisseur Int
-  imageUrl String
-  dimension String
+  imageUrl String  
+  dimension String  @db.VarChar(20)
   commande ArticleOnCommande[]
   livraison ArticleOnLivraison[]
 }
 model Commerciaux {
   id       Int    @id @default(autoincrement())
   login    String @unique
-  password String
-  role     String
+  password String @db.VarChar(20)
+  role     String @db.VarChar(20)
   bonLivraison BonLivraison[]
   bonCommande BonCommande[]
 }
@@ -42,10 +42,10 @@ model Commerciaux {
 model Client {
   id Int @id @default(autoincrement())
   nrClient  String @unique
-  nom       String
-  adresse   String
-  ville     String
-  pays      String
+  nom       String @db.VarChar(20)
+  adresse   String @db.VarChar(20)
+  ville     String @db.VarChar(20)
+  pays      String @db.VarChar(20)
   email     String @unique
   telephone Int
   remise    Int
@@ -57,7 +57,7 @@ model Facture{
  id  Int @id @default(autoincrement())
  numerofacture String  @unique
  createdDate DateTime @default(now())
- bonlivraisonid String @unique
+ bonlivraisonid String @unique @db.VarChar(20)
  bonlivraison BonLivraison @relation(fields: [bonlivraisonid],references: [numeroLivraison])
 }
 
@@ -66,7 +66,7 @@ model BonCommande {
   numeroCommande String @unique
   date DateTime @default(now())
   client Client @relation(fields: [clientId], references: [nrClient])
-  clientId String
+  clientId String @db.VarChar(20)
   articles ArticleOnCommande[]
   bonLivraison BonLivraison[]
   commerciauxId Int
@@ -75,11 +75,11 @@ model BonCommande {
 
 model ArticleOnCommande {
   article Article @relation(fields: [articleId], references: [numeroArticle])
-  articleId String
+  articleId String @db.VarChar(20)
   bonCommande BonCommande @relation(fields: [commandeId], references: [numeroCommande])
-  commandeId String
+  commandeId String @db.VarChar(20)
   quantite Int
-  observation String
+  observation String @db.VarChar(20)
   @@id([articleId, commandeId])
 }
 
@@ -87,11 +87,11 @@ model BonLivraison {
   id Int @default(autoincrement()) @id
   numeroLivraison String @unique
   date DateTime @default(now())
-  chauffeur String
+  chauffeur String @db.VarChar(20)
   bonCommande BonCommande @relation(fields: [bonCommandeId], references: [numeroCommande])
-  bonCommandeId String
+  bonCommandeId String @db.VarChar(20)
   client Client @relation(fields: [clientId], references: [nrClient])
-  clientId String
+  clientId String @db.VarChar(20)
   articles ArticleOnLivraison[]
   commerciauxId Int
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
@@ -100,9 +100,9 @@ model BonLivraison {
 
 model ArticleOnLivraison {
   article Article @relation(fields: [articleId], references: [numeroArticle])
-  articleId String
+  articleId String @db.VarChar(20)
   bonLivraison BonLivraison @relation(fields: [livraisonId], references: [numeroLivraison])
-  livraisonId String
+  livraisonId String @db.VarChar(20)
   quantite Int
   @@id([articleId, livraisonId])
 }
