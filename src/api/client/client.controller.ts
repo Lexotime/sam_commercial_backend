@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { clientDto, editclientDto } from './dto';
 
@@ -22,9 +22,9 @@ export class ClientController {
           })
     }
 
-    @Get(':id')
-    async getbyid(@Param('id',ParseIntPipe) id:number,@Res() res){
-        const client= await this.clientservice.getclientbyid(id)
+    @Get(':nrclient')
+    async getbyid(@Param('nrclient') nrclient:string ,@Res() res){
+        const client= await this.clientservice.getclientbynum(nrclient)
         if(!client){throw new HttpException('Not Found', HttpStatus.NOT_FOUND);}
       
         return res.status(HttpStatus.OK).json({
@@ -32,17 +32,17 @@ export class ClientController {
           })
     }
      
-    @Patch(':id')
-    async update(@Param('id',ParseIntPipe) id:number,@Body() dto:editclientDto,@Res() res){
-        const client= await this.clientservice.updateclient(id,dto)
+    @Patch(':nrclient')
+    async update(@Param('nrclient') nrclient:string,@Body() dto:editclientDto,@Res() res){
+        const client= await this.clientservice.updateclient(nrclient,dto)
         return res.status(HttpStatus.OK).json({
             client
           })
     }
     
-    @Delete(':id')
-    async delete(@Param('id',ParseIntPipe) id:number,@Res() res){
-        const client=await this.clientservice.deleteclient(id)
+    @Delete(':nrclient')
+    async delete(@Param('nrclient') nrclient:string,@Res() res){
+        const client=await this.clientservice.deleteclient(nrclient)
         return res.status(HttpStatus.OK).json({
             client
           })
