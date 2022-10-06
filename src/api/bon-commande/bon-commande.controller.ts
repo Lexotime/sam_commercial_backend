@@ -16,6 +16,7 @@ export class BonCommandeController {
     delete createBonCommandeDto.clientId;
     delete createBonCommandeDto.commerciauxId;
     for(let i = 0; i < articles.length; i++){
+     
       let {articleId} = articles[i];
       delete articles[i].articleId;
       articles[i].article = {

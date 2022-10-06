@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
+
 import { clientDto, editclientDto } from './dto';
 
 @Injectable()
@@ -24,7 +25,7 @@ export class ClientService {
             return client
          
         } catch (error) {
-         throw new Error("facture non creer");
+         throw new Error("client non cree");
          
          
         }
@@ -37,15 +38,15 @@ export class ClientService {
         
          return client
          } catch (error) {
-             throw new Error('facture pas trouve')
+             throw new Error('client pas trouve')
              
          }
           
      }
-     async getclientbyid(id:number){
+     async getclientbynum(nrClient){
          const client=await this.prisma.client.findUnique({
              where:{
-                 id
+                 nrClient
              }
  
            
@@ -54,10 +55,10 @@ export class ClientService {
         return client
      }
    
-     async updateclient(id:number,dto:editclientDto){
+     async updateclient(nrClient:string,dto:editclientDto){
          try {
              const client=this.prisma.client.update({
-                 where:{id},
+                 where:{nrClient},
 
                  data:{
                    ...dto
@@ -67,15 +68,15 @@ export class ClientService {
              return client
              
          } catch (error) {
-             throw new Error('fqcture non modifiee')
+             throw new Error('client non modifie')
          }
         
      }
 
-     async deleteclient(id:number){
+     async deleteclient(nrClient:string){
           return this.prisma.client.delete({
              where:{
-                 id
+                 nrClient
              }
          })
      }
