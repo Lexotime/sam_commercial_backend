@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
-import { editfacturedto, factureDto } from './dto';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch,  Res } from '@nestjs/common';
+import { editfacturedto} from './dto';
 import { FactureService } from './facture.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -8,13 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class FactureController {
     constructor(private factureservice:FactureService){}
 
-    @Post('creer')
-    async createfacture(@Body() dto:factureDto,@Res() res){
-      const facture= await this.factureservice.creerfacture(dto)
-      return res.status(HttpStatus.OK).json({
-        facture
-      })
-    }
+  
     
     @Get('get')
     async getfacture(@Res() res){
@@ -24,9 +18,9 @@ export class FactureController {
           })
     }
 
-    @Get(':id')
-    async getbyid(@Param('id',ParseIntPipe) id:number,@Res() res){
-        const facture= await this.factureservice.getfacturebyid(id)
+    @Get(':numerofacture')
+    async getbyid(@Param('numerofacture') numfacture:string,@Res() res){
+        const facture= await this.factureservice.getfacturebynrfacture(numfacture)
         if(!facture)
         throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
         return res.status(HttpStatus.OK).json({
@@ -34,17 +28,17 @@ export class FactureController {
           })
     }
      
-    @Patch(':id')
-    async update(@Param('id',ParseIntPipe) id:number,@Body() dto:editfacturedto,@Res() res){
-        const facture= await this.factureservice.updatefacture(id,dto)
+    @Patch(':numerofacture')
+    async update(@Param('numerofacture')numfacture:string,@Body() dto:editfacturedto,@Res() res){
+        const facture= await this.factureservice.updatefacture(numfacture,dto)
         return res.status(HttpStatus.OK).json({
             facture
           })
     }
     
-    @Delete(':id')
-    async delete(@Param('id',ParseIntPipe) id:number,@Res() res){
-        const facture=await this.factureservice.deletefacture(id)
+    @Delete(':numerofacture')
+    async delete(@Param('numerofacture') numfacture:string,@Res() res){
+        const facture=await this.factureservice.deletefacture(numfacture)
         return res.status(HttpStatus.OK).json({
             facture
           })
