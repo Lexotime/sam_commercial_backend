@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
 import { editfacturedto, factureDto } from './dto';
 import { FactureService } from './facture.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Facture')
 @Controller('facture')
 export class FactureController {
     constructor(private factureservice:FactureService){}

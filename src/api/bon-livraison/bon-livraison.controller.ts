@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Htt
 import { BonLivraisonService } from './bon-livraison.service';
 import { CreateBonLivraisonDto } from './dto/create-bon-livraison.dto';
 import { UpdateBonLivraisonDto } from './dto/update-bon-livraison.dto';
-import { Prisma } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Bon Livraison')
 @Controller('bon-livraison')
 export class BonLivraisonController {
   constructor(private readonly bonLivraisonService: BonLivraisonService) {}
