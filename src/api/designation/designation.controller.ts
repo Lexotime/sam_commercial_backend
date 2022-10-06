@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpException, 
 import { DesignationService } from './designation.service';
 import { CreateDesignationDto } from './dto/create-designation.dto';
 import { UpdateDesignationDto } from './dto/update-designation.dto';
-import { Designation } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Désignation')
 @Controller('designation')
 export class DesignationController {
   constructor(private readonly designationService: DesignationService) {}

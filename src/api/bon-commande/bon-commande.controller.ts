@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Htt
 import { BonCommandeService } from './bon-commande.service';
 import { CreateBonCommandeDto } from './dto/create-bon-commande.dto';
 import { UpdateBonCommandeDto } from './dto/update-bon-commande.dto';
-import { Prisma } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Bon Commande')
 @Controller('bon-commande')
 export class BonCommandeController {
   constructor(private readonly bonCommandeService: BonCommandeService) {}

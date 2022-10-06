@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Res } from '@nestjs/common';
 import { CommercialService } from './commercial.service';
 import {   editcomDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Commercial')
 @Controller('commercial')
 export class CommercialController {
     constructor(private comservice :CommercialService){}
