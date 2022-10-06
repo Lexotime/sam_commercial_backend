@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('Documentation API SAM')
     .setDescription('You can see here all endpoints you need during yours integrations')
     .setVersion('1.0')
-    .addTag('api')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
