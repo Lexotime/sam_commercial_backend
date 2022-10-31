@@ -13,7 +13,12 @@ export class ArticleController {
   @Post()
   async create(@Res() res, @Body() createArticleDto: CreateArticleDto) {
     // init article.controller.create
-    createArticleDto.numeroArticle = numberArticleGenerator();
+    let test;
+    do{
+       createArticleDto.numeroArticle = numberArticleGenerator();
+       test = await this.articleService.findOne(createArticleDto.numeroArticle);
+      }
+    while(test);
     const article = await this.articleService.create(createArticleDto);
     return res.status(HttpStatus.OK).json({
       article

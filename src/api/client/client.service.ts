@@ -6,13 +6,16 @@ import { clientDto, editclientDto } from './dto';
 @Injectable()
 export class ClientService {
     constructor(private prisma:PrismaService){}
-    async creerclient(dto:clientDto){
+    async creerclient(dto:any){
         
 
         try {
-         dto.nrClient = numberClientGenerator();
+            do{dto.nrClient = numberClientGenerator();}
+            while(await this.getclientbynum(dto.nrClient))
+         
          const client= await this.prisma.client.create({
              data:{ 
+                
                 nrClient:dto.nrClient,
                 nom:dto.nom,  
                 adresse :dto.adresse, 
