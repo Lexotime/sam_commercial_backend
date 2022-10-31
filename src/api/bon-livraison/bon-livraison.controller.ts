@@ -4,22 +4,30 @@ import { CreateBonLivraisonDto } from './dto/create-bon-livraison.dto';
 import { UpdateBonLivraisonDto } from './dto/update-bon-livraison.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { numberLivraisonGenerator, numberFactureGenerator } from 'src/utils/number-generator';
+import { FactureService } from '../facture/facture.service';
 
 @ApiTags('Bon Livraison')
 @Controller('bon-livraison')
 export class BonLivraisonController {
-  constructor(private readonly bonLivraisonService: BonLivraisonService) {}
+  constructor(private readonly bonLivraisonService: BonLivraisonService,private readonly factureservice:FactureService ) {}
 
   @Post()
   async create(@Res() res, @Body() createBonLivraisonDto: CreateBonLivraisonDto) {
     // init bonLivraison.controller.create
-    let numberFacure = numberFactureGenerator();
+    let numberFacture
+    do{  numberFacture = numberFactureGenerator()}
+      
+    while(this.factureservice.getfacturebynrfacture(numberFacture))
+    
+    
     const {articles, clientId, commerciauxId, bonCommandeId} = createBonLivraisonDto;
     delete createBonLivraisonDto.articles;
     delete createBonLivraisonDto.clientId;
     delete createBonLivraisonDto.commerciauxId;
     delete createBonLivraisonDto.bonCommandeId;
-    createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();
+    do{createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();}
+    while(this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
+    
     for(let i = 0; i < articles.length; i++){
       let {articleId} = articles[i];
       delete articles[i].articleId;
@@ -42,7 +50,7 @@ export class BonLivraisonController {
       },
       facture: {
         create: {
-          numerofacture: numberFacure
+          numerofacture: numberFacture
         }
       }
     }

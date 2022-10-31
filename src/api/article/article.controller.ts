@@ -15,7 +15,11 @@ export class ArticleController {
     // init article.controller.create
     const {designationId} = createArticleDto;
     delete createArticleDto.designationId;
-    createArticleDto.numeroArticle = numberArticleGenerator();
+    do{
+       createArticleDto.numeroArticle = numberArticleGenerator();
+      }
+    while(this.articleService.findOne(createArticleDto.numeroArticle));
+   
     const data = {...createArticleDto, designation: {
       connect: { id: designationId }
     }}
