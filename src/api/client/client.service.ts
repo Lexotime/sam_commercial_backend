@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
-
+import { numberClientGenerator } from 'src/utils/number-generator';
 import { clientDto, editclientDto } from './dto';
 
 @Injectable()
@@ -10,6 +10,7 @@ export class ClientService {
         
 
         try {
+         dto.nrClient = numberClientGenerator();
          const client= await this.prisma.client.create({
              data:{ 
                 nrClient:dto.nrClient,

@@ -3,6 +3,7 @@ import { BonLivraisonService } from './bon-livraison.service';
 import { CreateBonLivraisonDto } from './dto/create-bon-livraison.dto';
 import { UpdateBonLivraisonDto } from './dto/update-bon-livraison.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { numberLivraisonGenerator, numberFactureGenerator } from 'src/utils/number-generator';
 
 @ApiTags('Bon Livraison')
 @Controller('bon-livraison')
@@ -12,11 +13,13 @@ export class BonLivraisonController {
   @Post()
   async create(@Res() res, @Body() createBonLivraisonDto: CreateBonLivraisonDto) {
     // init bonLivraison.controller.create
+    let numberFacure = numberFactureGenerator();
     const {articles, clientId, commerciauxId, bonCommandeId} = createBonLivraisonDto;
     delete createBonLivraisonDto.articles;
     delete createBonLivraisonDto.clientId;
     delete createBonLivraisonDto.commerciauxId;
     delete createBonLivraisonDto.bonCommandeId;
+    createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();
     for(let i = 0; i < articles.length; i++){
       let {articleId} = articles[i];
       delete articles[i].articleId;
@@ -39,7 +42,7 @@ export class BonLivraisonController {
       },
       facture: {
         create: {
-          numerofacture: '2018-09-EHH'
+          numerofacture: numberFacure
         }
       }
     }

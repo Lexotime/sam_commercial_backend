@@ -3,6 +3,7 @@ import { BonCommandeService } from './bon-commande.service';
 import { CreateBonCommandeDto } from './dto/create-bon-commande.dto';
 import { UpdateBonCommandeDto } from './dto/update-bon-commande.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { numberOrderGenerator } from '../../utils/number-generator';
 
 @ApiTags('Bon Commande')
 @Controller('bon-commande')
@@ -16,6 +17,7 @@ export class BonCommandeController {
     delete createBonCommandeDto.articles;
     delete createBonCommandeDto.clientId;
     delete createBonCommandeDto.commerciauxId;
+    createBonCommandeDto.numeroCommande = numberOrderGenerator();
     for(let i = 0; i < articles.length; i++){
      
       let {articleId} = articles[i];

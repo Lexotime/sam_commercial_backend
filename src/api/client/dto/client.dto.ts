@@ -1,11 +1,9 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
 
 export class clientDto {
     
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
+    @IsOptional()
     nrClient:string
     @IsString()
     @IsNotEmpty()
