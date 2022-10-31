@@ -13,6 +13,7 @@ export class ArticleController {
   @Post()
   async create(@Res() res, @Body() createArticleDto: CreateArticleDto) {
     // init article.controller.create
+<<<<<<< HEAD
     const {designationId} = createArticleDto;
     delete createArticleDto.designationId;
     do{
@@ -24,8 +25,12 @@ export class ArticleController {
       connect: { id: designationId }
     }}
     const designation = await this.articleService.create(data);
+=======
+    createArticleDto.numeroArticle = numberArticleGenerator();
+    const article = await this.articleService.create(createArticleDto);
+>>>>>>> ddc52a07216dffc7da2d1736b8f169a88e97b026
     return res.status(HttpStatus.OK).json({
-      designation
+      article
     })
   }
 
