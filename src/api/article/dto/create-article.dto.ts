@@ -7,7 +7,7 @@ export class CreateArticleDto {
     
     @IsNotEmpty()
     @ApiProperty()
-    designationId: number;
+    designation: string;
 
     @IsNotEmpty()
     @ApiProperty()

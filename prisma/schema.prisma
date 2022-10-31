@@ -9,18 +9,10 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
-model Designation {
-  id Int @default(autoincrement()) @id
-  libelle   String @db.VarChar(20)
-  articles Article[]
-}
-
 model Article {
   id Int @default(autoincrement()) @id
   numeroArticle String @unique 
-  designation Designation @relation(fields: [designationId], references: [id])
-  designationId Int 
+  designation String
   marque String @db.VarChar(20)
   prixUnitaire Int
   stock Int
