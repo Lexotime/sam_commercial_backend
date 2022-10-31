@@ -1,10 +1,9 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateBonCommandeDto {
 
-    @IsNotEmpty()
-    @ApiProperty()
+    @IsOptional()
     numeroCommande: string;
 
     @IsNotEmpty()
