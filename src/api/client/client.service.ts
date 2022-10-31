@@ -11,7 +11,7 @@ export class ClientService {
 
         try {
             do{dto.nrClient = numberClientGenerator();}
-            while(this.getclientbynum(dto.nrClient))
+            while(await this.getclientbynum(dto.nrClient))
          
          const client= await this.prisma.client.create({
              data:{ 

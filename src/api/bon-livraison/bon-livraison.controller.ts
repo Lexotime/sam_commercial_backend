@@ -17,7 +17,7 @@ export class BonLivraisonController {
     let numberFacture
     do{  numberFacture = numberFactureGenerator()}
       
-    while(this.factureservice.getfacturebynrfacture(numberFacture))
+    while(await this.factureservice.getfacturebynrfacture(numberFacture))
     
     
     const {articles, clientId, commerciauxId, bonCommandeId} = createBonLivraisonDto;
@@ -26,7 +26,7 @@ export class BonLivraisonController {
     delete createBonLivraisonDto.commerciauxId;
     delete createBonLivraisonDto.bonCommandeId;
     do{createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();}
-    while(this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
+    while(await this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
     
     for(let i = 0; i < articles.length; i++){
       let {articleId} = articles[i];

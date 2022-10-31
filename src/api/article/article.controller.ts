@@ -13,22 +13,13 @@ export class ArticleController {
   @Post()
   async create(@Res() res, @Body() createArticleDto: CreateArticleDto) {
     // init article.controller.create
-<<<<<<< HEAD
-    const {designationId} = createArticleDto;
-    delete createArticleDto.designationId;
+    let test;
     do{
        createArticleDto.numeroArticle = numberArticleGenerator();
+       test = await this.articleService.findOne(createArticleDto.numeroArticle);
       }
-    while(this.articleService.findOne(createArticleDto.numeroArticle));
-   
-    const data = {...createArticleDto, designation: {
-      connect: { id: designationId }
-    }}
-    const designation = await this.articleService.create(data);
-=======
-    createArticleDto.numeroArticle = numberArticleGenerator();
+    while(test);
     const article = await this.articleService.create(createArticleDto);
->>>>>>> ddc52a07216dffc7da2d1736b8f169a88e97b026
     return res.status(HttpStatus.OK).json({
       article
     })
