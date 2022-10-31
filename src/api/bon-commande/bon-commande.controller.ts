@@ -17,7 +17,8 @@ export class BonCommandeController {
     delete createBonCommandeDto.articles;
     delete createBonCommandeDto.clientId;
     delete createBonCommandeDto.commerciauxId;
-    createBonCommandeDto.numeroCommande = numberOrderGenerator();
+    do{createBonCommandeDto.numeroCommande = numberOrderGenerator();}
+    while(this.bonCommandeService.findOne(createBonCommandeDto.numeroCommande));
     for(let i = 0; i < articles.length; i++){
      
       let {articleId} = articles[i];
