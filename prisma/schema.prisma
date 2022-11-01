@@ -27,6 +27,8 @@ model Commerciaux {
   login    String @unique
   password String @db.VarChar(20)
   role     String @db.VarChar(20)
+  username String @db.VarChar(20)
+  image     String  
   bonLivraison BonLivraison[]
   bonCommande BonCommande[]
 }

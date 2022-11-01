@@ -15,7 +15,7 @@ export class ArticleController {
     // init article.controller.create
     let test;
     do{
-       createArticleDto.numeroArticle = numberArticleGenerator();
+    createArticleDto.numeroArticle = numberArticleGenerator();
        test = await this.articleService.findOne(createArticleDto.numeroArticle);
       }
     while(test);
