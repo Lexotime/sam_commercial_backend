@@ -17,4 +17,6 @@ export class CreateBonCommandeDto {
     @IsNotEmpty()
     @ApiProperty()
     commerciauxId: number;
+
+   
 }
