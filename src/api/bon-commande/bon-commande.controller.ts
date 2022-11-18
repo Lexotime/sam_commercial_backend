@@ -17,15 +17,19 @@ export class BonCommandeController {
     delete createBonCommandeDto.articles;
     delete createBonCommandeDto.clientId;
     delete createBonCommandeDto.commerciauxId;
+    
     do{createBonCommandeDto.numeroCommande = numberOrderGenerator();}
     while(await this.bonCommandeService.findOne(createBonCommandeDto.numeroCommande));
     for(let i = 0; i < articles.length; i++){
      
       let {articleId} = articles[i];
       delete articles[i].articleId;
+      
       articles[i].article = {
         connect : {numeroArticle: articleId}
       }
+      articles[i].observation=''
+      
     }
     const data = {...createBonCommandeDto, 
       articles: {
