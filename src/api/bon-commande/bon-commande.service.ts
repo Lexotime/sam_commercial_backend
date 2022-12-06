@@ -33,7 +33,11 @@ export class BonCommandeService {
       where: {numeroCommande},
       include:{
         client:true,
-        articles:true
+        articles:{
+          include:{
+            article:true
+          }
+        }
       }
     })
     return bonCommande;
