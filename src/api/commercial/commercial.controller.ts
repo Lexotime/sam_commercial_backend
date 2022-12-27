@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Res } from '@nestjs/common';
 import { CommercialService } from './commercial.service';
-import {   editcomDto } from './dto';
+import {   comDto, editcomDto } from './dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Commercial')
@@ -8,6 +8,14 @@ import { ApiTags } from '@nestjs/swagger';
 export class CommercialController {
     constructor(private comservice :CommercialService){}
 
+
+    @Post('post')
+    async createcommerciaux(@Res() res,@Body() dto:comDto){
+        const commercial=await this.comservice.createcommerciaux(dto)
+        return res.status(HttpStatus.OK).json({
+            commercial
+        })
+    }
   
     @Get('get')
     async getcommerciaux(@Res() res){

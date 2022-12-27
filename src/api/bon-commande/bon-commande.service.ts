@@ -3,6 +3,7 @@ import { CreateBonCommandeDto } from './dto/create-bon-commande.dto';
 import { UpdateBonCommandeDto } from './dto/update-bon-commande.dto';
 import { BonCommande, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
+import { upbonCommande } from './dto';
 
 @Injectable()
 export class BonCommandeService {
@@ -21,7 +22,8 @@ export class BonCommandeService {
     // init bonCommande.service.findAll
     const bonCommandes = await this.prismaService.bonCommande.findMany({
       include:{
-        client:true
+        client:true,
+  
       }
     });
     return bonCommandes;
@@ -51,6 +53,20 @@ export class BonCommandeService {
     })
     return bonCommande;
   }
+
+  async updatearticle(articleId_commandeId,dto:upbonCommande){
+    const bonCommande = await this.prismaService.articleOnCommande.update({
+      where:{
+        articleId_commandeId
+      },
+      data:{
+        ...dto
+      }
+    })
+    return bonCommande
+
+  }
+  
 
   async remove(numeroCommande: string) {
     // init bonCommande.service.remove

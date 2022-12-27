@@ -17,4 +17,14 @@ export class comDto{
     @IsString()
     @ApiProperty()
     role:string
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    image:string
+    
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    username:string
 }
