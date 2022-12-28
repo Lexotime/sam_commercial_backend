@@ -22,6 +22,7 @@ export class ArticleService {
     const articles = await this.prismaService.article.findMany({})
     return articles;
   }
+  
 
   async findOne(numeroArticle: string) {
     // int article.service.findOne

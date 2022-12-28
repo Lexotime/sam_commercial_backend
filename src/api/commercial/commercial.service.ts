@@ -6,6 +6,24 @@ import {   editcomDto } from './dto';
 @Injectable()
 export class CommercialService {
     constructor(private prisma:PrismaService){}
+
+
+    async createcommerciaux(dto:any){
+        
+            const commerciaux= await this.prisma.commerciaux.create({
+                data:{
+                        login:dto.login,
+                        password:dto.password,
+                        role:dto.role,
+                        image:dto.image,
+                        username:dto.username
+                }
+            })
+
+            return commerciaux
+       
+         
+    }
  
 
  async getcommerciaux(){

@@ -17,6 +17,7 @@ export class BonCommandeController {
     delete createBonCommandeDto.articles;
     delete createBonCommandeDto.clientId;
     delete createBonCommandeDto.commerciauxId;
+  
     
     do{createBonCommandeDto.numeroCommande = numberOrderGenerator();}
     while(await this.bonCommandeService.findOne(createBonCommandeDto.numeroCommande));
@@ -74,6 +75,8 @@ export class BonCommandeController {
       bonCommande
     })
   }
+
+ 
 
   @Delete(':numeroCommande')
   async remove(@Res() res, @Param('numeroCommande') numeroCommande: string) {

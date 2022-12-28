@@ -26,7 +26,11 @@ export class BonLivraisonService {
  async findOne(numeroLivraison: string) {
    // inti bonLivraison.service.findOne
    const bonLivraison = await this.prismaService.bonLivraison.findUnique({
-     where: {numeroLivraison}
+     where: {numeroLivraison},
+     include:{
+      articles:true,
+      client:true
+     }
    })
    return bonLivraison;
  }

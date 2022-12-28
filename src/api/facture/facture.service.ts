@@ -26,6 +26,14 @@ export class FactureService {
             const facture=await this.prisma.facture.findUnique({
                 where:{
                    numerofacture
+                },
+                include:{
+                    bonlivraison:{
+                        select:{
+                            articles:true,
+                            client:true
+                        }
+                    }
                 }
     
               
