@@ -30,7 +30,11 @@ export class FactureService {
                 include:{
                     bonlivraison:{
                         select:{
-                            articles:true,
+                            articles:{
+                                include:{
+                                    article:true
+                                }
+                            },
                             client:true
                         }
                     }

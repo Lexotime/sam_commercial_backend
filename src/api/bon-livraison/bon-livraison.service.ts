@@ -28,7 +28,12 @@ export class BonLivraisonService {
    const bonLivraison = await this.prismaService.bonLivraison.findUnique({
      where: {numeroLivraison},
      include:{
-      articles:true,
+      articles:{
+        include:{
+          article:true
+        }
+      }
+      ,
       client:true
      }
    })
