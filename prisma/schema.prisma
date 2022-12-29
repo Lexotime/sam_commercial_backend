@@ -118,6 +118,5 @@ model ArticleOnProformat {
   Proformat Proformat @relation(fields: [ProformatId], references: [numeroProformat])
   ProformatId String @db.VarChar(20)
   quantite Int
-  observation String @db.VarChar(20)
   @@id([articleId, ProformatId])
 }
