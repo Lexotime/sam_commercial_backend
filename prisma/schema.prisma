@@ -20,6 +20,7 @@ model Article {
   imageUrl String  
   dimension String  @db.VarChar(20)
   commande ArticleOnCommande[]
+  proformat ArticleOnProformat[]
   livraison ArticleOnLivraison[]
 }
 model Commerciaux {
@@ -31,6 +32,7 @@ model Commerciaux {
   image     String  
   bonLivraison BonLivraison[]
   bonCommande BonCommande[]
+  proformat Proformat[]
 }
 
 model Client {
@@ -99,4 +101,22 @@ model ArticleOnLivraison {
   livraisonId String @db.VarChar(20)
   quantite Int
   @@id([articleId, livraisonId])
+}
+
+model Proformat {
+  id Int @default(autoincrement()) @id
+  numeroProformat String @unique
+  date DateTime @default(now())
+  articles ArticleOnProformat[]
+  commerciauxId Int
+  commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
+}
+
+model ArticleOnProformat {
+  article Article @relation(fields: [articleId], references: [numeroArticle])
+  articleId String @db.VarChar(20)
+  Proformat Proformat @relation(fields: [ProformatId], references: [numeroProformat])
+  ProformatId String @db.VarChar(20)
+  quantite Int
+  @@id([articleId, ProformatId])
 }

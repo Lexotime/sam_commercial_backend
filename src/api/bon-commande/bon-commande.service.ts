@@ -23,7 +23,7 @@ export class BonCommandeService {
     const bonCommandes = await this.prismaService.bonCommande.findMany({
       include:{
         client:true,
-  
+        commerciaux:true
       }
     });
     return bonCommandes;
@@ -39,7 +39,8 @@ export class BonCommandeService {
           include:{
             article:true
           }
-        }
+        },
+        
       }
     })
     return bonCommande;

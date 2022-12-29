@@ -19,14 +19,28 @@ export class BonLivraisonService {
 
  async findAll() {
    // init bonLivraison.service.findAll
-   const bonLivraisons = await this.prismaService.bonLivraison.findMany({});
+   const bonLivraisons = await this.prismaService.bonLivraison.findMany({
+    include:{
+      commerciaux:true
+    }
+   });
    return bonLivraisons;
  }
 
  async findOne(numeroLivraison: string) {
    // inti bonLivraison.service.findOne
    const bonLivraison = await this.prismaService.bonLivraison.findUnique({
-     where: {numeroLivraison}
+     where: {numeroLivraison},
+     include:{
+      articles:{
+        include:{
+          article:true
+        }
+      }
+      ,
+      client:true,
+      commerciaux:true
+     }
    })
    return bonLivraison;
  }
