@@ -22,6 +22,7 @@ model Article {
   commande ArticleOnCommande[]
   proformat ArticleOnProformat[]
   livraison ArticleOnLivraison[]
+  client ArticleOnClient[]
 }
 model Commerciaux {
   id       Int    @id @default(autoincrement())
@@ -45,8 +46,18 @@ model Client {
   email     String @unique
   telephone Int
   remise    Int
+  articles ArticleOnClient[]
   bonCommande BonCommande[]
   bonLivraison BonLivraison[]
+}
+
+model ArticleOnClient {
+  article Article @relation(fields: [articleId], references: [numeroArticle])
+  articleId String @db.VarChar(20)
+  client Client @relation(fields: [clientId], references: [nrClient])
+  clientId String @db.VarChar(20)
+  prixSpecial Int
+  @@id([articleId, clientId])
 }
 
 model Facture{
