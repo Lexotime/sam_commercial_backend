@@ -106,6 +106,8 @@ model ArticleOnLivraison {
 model Proformat {
   id Int @default(autoincrement()) @id
   numeroProformat String @unique
+   nomClient String @db.VarChar(50)
+   adresseClient String @db.VarChar(50)
   date DateTime @default(now())
   articles ArticleOnProformat[]
   commerciauxId Int
