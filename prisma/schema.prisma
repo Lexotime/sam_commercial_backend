@@ -122,3 +122,8 @@ model ArticleOnProformat {
   quantite Int
   @@id([articleId, ProformatId])
 }
+
+model chauffeur{
+  nomChauffeur String @db.VarChar(50) @unique
+  matricule String @db.VarChar(50)  
+}
