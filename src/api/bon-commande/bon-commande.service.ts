@@ -21,6 +21,9 @@ export class BonCommandeService {
   async findAll() {
     // init bonCommande.service.findAll
     const bonCommandes = await this.prismaService.bonCommande.findMany({
+      orderBy:{
+        id:'desc'
+      },
       include:{
         client:true,
         commerciaux:true

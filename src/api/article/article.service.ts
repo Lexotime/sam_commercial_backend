@@ -19,7 +19,11 @@ export class ArticleService {
 
   async findAll() {
     // init article.service.findAll
-    const articles = await this.prismaService.article.findMany({})
+    const articles = await this.prismaService.article.findMany({
+      orderBy:{
+        id:'desc'
+      }
+    })
     return articles;
   }
   

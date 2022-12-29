@@ -17,7 +17,10 @@ export class ProformatService {
     async findAll() {
       // init bonCommande.service.findAll
       const proformat = await this.prisma.proformat.findMany({
-       
+         orderBy:{
+          id:'desc'
+          
+         }
       });
       return proformat;
     }
