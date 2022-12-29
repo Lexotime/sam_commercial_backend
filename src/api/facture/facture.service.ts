@@ -35,7 +35,8 @@ export class FactureService {
                                     article:true
                                 }
                             },
-                            client:true
+                            client:true,
+                            commerciaux:true
                         }
                     }
                 }

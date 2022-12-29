@@ -34,7 +34,8 @@ export class BonLivraisonService {
         }
       }
       ,
-      client:true
+      client:true,
+      commerciaux:true
      }
    })
    return bonLivraison;

@@ -39,7 +39,8 @@ export class BonCommandeService {
           include:{
             article:true
           }
-        }
+        },
+        commerciaux:true
       }
     })
     return bonCommande;

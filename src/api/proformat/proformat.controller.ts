@@ -4,7 +4,7 @@ import { numberProformatGenerator } from 'src/utils/number-generator';
 import { CreateProformatDto } from './dto';
 import { ProformatService } from './proformat.service';
 
-@ApiTags('Bon Commande')
+@ApiTags('proformat')
 @Controller('proformat')
 export class ProformatController {
     
@@ -16,7 +16,7 @@ export class ProformatController {
     // init bonCommande.controller.create
     const {articles,commerciauxId} = createProformatDto;
     delete createProformatDto.articles;
-    delete createProformatDto.clientId;
+    
     delete createProformatDto.commerciauxId;
   
     
