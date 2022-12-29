@@ -85,8 +85,7 @@ export class ClientService {
         for(let i=0; i < listArticle.length; i++){
             await this.prisma.articleOnClient.upsert({
                 where: {
-                    articleId: listArticle[i].articleId,
-                    clientId: numeroClient
+                    articleId_clientId: {articleId:listArticle[i].articleId, clientId:numeroClient}
                 },
                 update: {
                     prixSpecial: listArticle[i].prixSpecial

@@ -46,6 +46,7 @@ model Client {
   email     String @unique
   telephone Int
   remise    Int
+  isSpecial Boolean @default(false)
   articles ArticleOnClient[]
   bonCommande BonCommande[]
   bonLivraison BonLivraison[]
