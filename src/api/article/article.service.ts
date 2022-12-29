@@ -20,6 +20,9 @@ export class ArticleService {
   async findAll() {
     // init article.service.findAll
     const articles = await this.prismaService.article.findMany({
+      include: {
+        client: true
+      },
       orderBy:{
         id:'desc'
       }
@@ -31,6 +34,9 @@ export class ArticleService {
   async findOne(numeroArticle: string) {
     // int article.service.findOne
     const article = await this.prismaService.article.findUnique({
+      include:{
+        client: true
+      },
       where: {numeroArticle}
     });
     return article;

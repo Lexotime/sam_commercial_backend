@@ -37,7 +37,12 @@ export class BonLivraisonService {
      include:{
       articles:{
         include:{
-          article:true
+          article:{
+            include: {
+              client: true
+            }
+          }
+
         }
       }
       ,
