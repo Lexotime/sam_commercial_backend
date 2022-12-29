@@ -9,8 +9,9 @@ import { BonCommandeModule } from './api/bon-commande/bon-commande.module';
 import { BonLivraisonModule } from './api/bon-livraison/bon-livraison.module';
 import { ClientModule } from './api/client/client.module';
 import { StatistiqueModule } from './api/statistique/statistique.module';
+import { ProformatModule } from './api/proformat/proformat.module';
 
 @Module({
-  imports:[ConfigModule.forRoot({isGlobal:true}),PrismaModule, CommercialModule, AuthModule, ClientModule ,FactureModule, ArticleModule, BonCommandeModule, BonLivraisonModule,StatistiqueModule],
+  imports:[ConfigModule.forRoot({isGlobal:true}),PrismaModule, CommercialModule, AuthModule, ClientModule ,FactureModule, ArticleModule, BonCommandeModule, BonLivraisonModule,StatistiqueModule,ProformatModule],
 })
 export class AppModule {}

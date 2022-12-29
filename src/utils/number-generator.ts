@@ -36,3 +36,12 @@ export const numberClientGenerator = () => {
         clientNumber = clientNumber + Math.floor(Math.random()*10);
     return clientNumber;
 }
+
+
+export const numberProformatGenerator = () => {
+    // 5 numbers ----
+    let proNumber = 'CM-';
+    for(let i=1; i <=5; i++)
+        proNumber = proNumber + Math.floor(Math.random()*10);
+    return proNumber;
+}
