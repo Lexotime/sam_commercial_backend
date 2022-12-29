@@ -5,6 +5,14 @@ export class CreateProformatDto {
 
     @IsOptional()
     numeroProformat: string;
+    
+    @IsNotEmpty()
+    @ApiProperty()
+    nomClient: any;
+
+    @IsNotEmpty()
+    @ApiProperty()
+    adresseClient: any;
 
     
 
