@@ -81,6 +81,25 @@ export class ClientService {
         
      }
 
+     async updateSpecialPrice(numeroClient: any, listArticle: any){
+        for(let i=0; i < listArticle.length; i++){
+            await this.prisma.articleOnClient.upsert({
+                where: {
+                    articleId: listArticle[i].articleId,
+                    clientId: numeroClient
+                },
+                update: {
+                    prixSpecial: listArticle[i].prixSpecial
+                },
+                create: {
+                    clientId: numeroClient,
+                    ... listArticle[i]
+                }
+            })
+        }
+        return numeroClient;
+     }
+
      async deleteclient(nrClient:string){
           return this.prisma.client.delete({
              where:{

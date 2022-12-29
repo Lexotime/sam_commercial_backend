@@ -41,6 +41,14 @@ export class ClientController {
             client
           })
     }
+
+    @Patch('specialPrice/:numeroClient')
+    async updateSpecialPrice(@Res() res, @Body() infos, @Param('numeroClient') numeroClient){
+      const numClient = await this.clientservice.updateSpecialPrice(numeroClient, infos.listArticle);
+      return res.status(HttpStatus.OK).json({
+        numClient
+      })
+    }
     
     @Delete(':nrclient')
     async delete(@Param('nrclient') nrclient:string,@Res() res){
