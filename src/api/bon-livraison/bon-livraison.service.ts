@@ -20,6 +20,9 @@ export class BonLivraisonService {
  async findAll() {
    // init bonLivraison.service.findAll
    const bonLivraisons = await this.prismaService.bonLivraison.findMany({
+    orderBy:{
+      id:'desc'
+    },
     include:{
       commerciaux:true
     }
