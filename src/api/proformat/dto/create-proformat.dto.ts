@@ -6,9 +6,7 @@ export class CreateProformatDto {
     @IsOptional()
     numeroProformat: string;
 
-    @IsNotEmpty()
-    @ApiProperty()
-    clientId: string;
+    
 
     @IsNotEmpty()
     @ApiProperty()
