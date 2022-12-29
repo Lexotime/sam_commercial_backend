@@ -38,7 +38,11 @@ export class ClientService {
 
      async getclient(){
          try {
-             const client= await this.prisma.client.findMany()
+             const client= await this.prisma.client.findMany({
+                orderBy:{
+                    id:'desc'
+                }
+             })
         
          return client
          } catch (error) {

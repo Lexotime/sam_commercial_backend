@@ -11,7 +11,11 @@ export class FactureService {
 
         async getfacture(){
             try {
-                const facture= await this.prisma.facture.findMany()
+                const facture= await this.prisma.facture.findMany({
+                    orderBy:{
+                        id:'desc'
+                    }
+                })
             if (!facture){
                 return []
             }

@@ -28,7 +28,9 @@ export class CommercialService {
 
  async getcommerciaux(){
      try {
-         const commerciaux= await this.prisma.commerciaux.findMany()
+         const commerciaux= await this.prisma.commerciaux.findMany({
+            orderBy:{id:'desc'}
+         })
      if (!commerciaux){
          throw new ForbiddenException('pas de commerciaux')
      }

@@ -94,7 +94,6 @@ model BonLivraison {
   id Int @default(autoincrement()) @id
   numeroLivraison String @unique
   date DateTime @default(now())
-  chauffeur String @db.VarChar(20)
   bonCommande BonCommande @relation(fields: [bonCommandeId], references: [numeroCommande])
   bonCommandeId String @db.VarChar(20)
   client Client @relation(fields: [clientId], references: [nrClient])
@@ -103,6 +102,8 @@ model BonLivraison {
   commerciauxId Int
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
   facture Facture ?
+  chauffeurId String @db.VarChar(20)
+  chauffeur chauffeur @relation(fields: [chauffeurId], references: [nomChauffeur])
 }
 
 model ArticleOnLivraison {
@@ -117,6 +118,8 @@ model ArticleOnLivraison {
 model Proformat {
   id Int @default(autoincrement()) @id
   numeroProformat String @unique
+   nomClient String @db.VarChar(50)
+   adresseClient String @db.VarChar(50)
   date DateTime @default(now())
   articles ArticleOnProformat[]
   commerciauxId Int
@@ -130,4 +133,10 @@ model ArticleOnProformat {
   ProformatId String @db.VarChar(20)
   quantite Int
   @@id([articleId, ProformatId])
+}
+
+model chauffeur{
+  nomChauffeur String @db.VarChar(50) @unique
+  matricule String @db.VarChar(50)
+  bonlivraison BonLivraison[] 
 }
