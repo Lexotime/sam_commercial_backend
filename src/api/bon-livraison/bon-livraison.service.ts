@@ -42,7 +42,8 @@ export class BonLivraisonService {
       }
       ,
       client:true,
-      commerciaux:true
+      commerciaux:true,
+      chauffeur:true
      }
    })
    return bonLivraison;
