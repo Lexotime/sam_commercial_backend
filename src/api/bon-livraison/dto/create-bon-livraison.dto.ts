@@ -8,7 +8,7 @@ export class CreateBonLivraisonDto {
 
     @IsNotEmpty()
     @ApiProperty()
-    chauffeur: string;
+    chauffeurId: string;
 
     @IsNotEmpty()
     @ApiProperty()

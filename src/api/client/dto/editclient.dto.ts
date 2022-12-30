@@ -1,3 +1,4 @@
+import { IsBoolean } from "@nestjs/class-validator"
 import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class editclientDto {
@@ -27,4 +28,7 @@ export class editclientDto {
     @IsNumber()
     remise  ?   :number
 
+    @IsOptional()
+    @IsBoolean()
+    isSpecial:boolean
 }

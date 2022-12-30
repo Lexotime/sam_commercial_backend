@@ -1,5 +1,6 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
+import { isBoolean, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
+import { IsBoolean } from "@nestjs/class-validator"
 
 export class clientDto {
     
@@ -27,5 +28,7 @@ export class clientDto {
     @IsNumber()
     @ApiProperty()
     remise    :number
+    @IsBoolean()
+    isSpecial:boolean
 
 }

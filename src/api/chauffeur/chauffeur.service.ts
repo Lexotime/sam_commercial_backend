@@ -32,9 +32,7 @@ export class ChauffeurService {
      async getclient(){
          try {
              const chauffeur= await this.prisma.chauffeur.findMany({
-                orderBy:{
-                    id:'desc'
-                }
+                
              })
         
          return chauffeur

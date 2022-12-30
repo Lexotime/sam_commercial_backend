@@ -23,7 +23,7 @@ export class ChauffeurController {
     }
 
     @Get(':nrclient')
-    async getbyid(@Param('nrclient') nrchauffeur:string ,@Res() res){
+    async getbyid(@Param('nrchauffeur') nrchauffeur:string ,@Res() res){
         const chauffeur= await this.chauffeurservice.getclientbynum(nrchauffeur)
         if(!chauffeur){throw new HttpException('Not Found', HttpStatus.NOT_FOUND);}
       
