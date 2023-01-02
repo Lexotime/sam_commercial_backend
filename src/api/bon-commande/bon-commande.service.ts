@@ -58,17 +58,12 @@ export class BonCommandeService {
     return bonCommande;
   }
 
-  async updatearticle(articleId,commandeId,dto:upbonCommande){
-    const bonCommande = await this.prismaService.articleOnCommande.updateMany({
-      where:{
-        bonCommande: {
-          numeroCommande: commandeId
-        },
-        article:{
-          numeroArticle: articleId
-        }
-      },
-      data: {
+  async updatearticle(numeroaricle,numeroCommande,dto:upbonCommande){
+    const bonCommande = await this.prismaService.articleOnCommande.update({
+      where:{articleId_commandeId:{
+        articleId:numeroaricle,commandeId:numeroCommande
+      }},
+      data:{
         ...dto
       }
     })

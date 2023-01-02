@@ -20,11 +20,12 @@ export class BonLivraisonController {
     while(await this.factureservice.getfacturebynrfacture(numberFacture))
     
     
-    const {articles, clientId, commerciauxId, bonCommandeId} = createBonLivraisonDto;
+    const {articles, clientId, commerciauxId, bonCommandeId,chauffeurId} = createBonLivraisonDto;
     delete createBonLivraisonDto.articles;
     delete createBonLivraisonDto.clientId;
     delete createBonLivraisonDto.commerciauxId;
     delete createBonLivraisonDto.bonCommandeId;
+    delete createBonLivraisonDto.chauffeurId;
     do{createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();}
     while(await this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
     
@@ -52,6 +53,9 @@ export class BonLivraisonController {
         create: {
           numerofacture: numberFacture
         }
+      },
+      chauffeur:{
+        connect:{matricule:chauffeurId}
       }
     }
     const bonLivraison = await this.bonLivraisonService.create(data);

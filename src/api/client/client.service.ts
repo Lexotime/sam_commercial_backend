@@ -6,7 +6,7 @@ import { clientDto, editclientDto } from './dto';
 @Injectable()
 export class ClientService {
     constructor(private prisma:PrismaService){}
-    async creerclient(dto:any){
+    async creerclient(dto:clientDto){
         
 
         try {
@@ -23,7 +23,8 @@ export class ClientService {
                 pays :dto.pays ,    
                 email:dto.email,   
                 telephone :dto.telephone,
-                remise :dto.remise 
+                remise :dto.remise,
+                isSpecial:dto.isSpecial
                  }
          })
             return client

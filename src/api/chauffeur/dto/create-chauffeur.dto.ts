@@ -6,9 +6,7 @@ export class ChauffeurDto {
     @IsOptional()
     nomChauffeur: string;
 
-    
-
-    @IsNotEmpty()
+     @IsNotEmpty()
     @ApiProperty()
     matricule:string
 
