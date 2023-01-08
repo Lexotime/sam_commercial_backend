@@ -9,6 +9,31 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model Versement {
+  id Int @default(autoincrement()) @id
+  montant Int
+  soldeApres Int
+  dateExecution DateTime @default(now())
+  compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
+  numeroCompte String
+}
+
+model Debit {
+  id Int @default(autoincrement()) @id
+  montant Int
+  soldeApres Int
+  dateExecution DateTime @default(now())
+  compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
+  numeroCompte String
+}
+model Compte{
+  numeroCompte String @unique
+  solde Int
+  client Client @relation(fields: [numeroClient], references: [nrClient])
+  numeroClient String @unique
+  versements Versement[]
+  debits Debit[]
+}
 model Article {
   id Int @default(autoincrement()) @id
   numeroArticle String @unique 
@@ -50,6 +75,7 @@ model Client {
   articles ArticleOnClient[]
   bonCommande BonCommande[]
   bonLivraison BonLivraison[]
+  compte Compte?
 }
 
 model ArticleOnClient {
