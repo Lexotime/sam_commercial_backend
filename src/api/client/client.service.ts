@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
-import { numberClientGenerator } from 'src/utils/number-generator';
+import { numberClientGenerator, numberCompteGenerator } from 'src/utils/number-generator';
 import { clientDto, editclientDto } from './dto';
 
 @Injectable()
@@ -10,13 +10,24 @@ export class ClientService {
         
 
         try {
-            do{dto.nrClient = numberClientGenerator();}
-            while(await this.getclientbynum(dto.nrClient))
+            do{
+                dto.nrClient = numberClientGenerator();
+            } while(await this.getclientbynum(dto.nrClient))
+
+            do{
+                dto.numeroCompte = numberCompteGenerator();
+            } while(await this.getclientbynum(dto.nrClient))
          
          const client= await this.prisma.client.create({
              data:{ 
                 
                 nrClient:dto.nrClient,
+                compte: {
+                    create: {
+                        numeroCompte: dto.numeroCompte,
+                        solde: dto.soldeInitial
+                    }
+                },
                 nom:dto.nom,  
                 adresse :dto.adresse, 
                 ville:dto.ville,     
@@ -42,6 +53,9 @@ export class ClientService {
              const client= await this.prisma.client.findMany({
                 orderBy:{
                     id:'desc'
+                },
+                include: {
+                    compte: true
                 }
              })
         
@@ -56,6 +70,9 @@ export class ClientService {
          const client=await this.prisma.client.findUnique({
              where:{
                  nrClient
+             },
+             include: {
+                compte: true
              }
  
            

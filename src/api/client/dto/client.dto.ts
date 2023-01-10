@@ -6,6 +6,9 @@ export class clientDto {
     
     @IsOptional()
     nrClient:string
+
+    @IsOptional()
+    numeroCompte: string
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
@@ -31,4 +34,7 @@ export class clientDto {
     @IsBoolean()
     isSpecial:boolean
 
+    @ApiProperty()
+    @IsNotEmpty()
+    soldeInitial: number
 }

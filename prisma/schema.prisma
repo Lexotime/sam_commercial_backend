@@ -9,6 +9,33 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model Versement {
+  id Int @default(autoincrement()) @id
+  montant Int
+  soldeApres Int
+  dateExecution DateTime @default(now())
+  compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
+  numeroCompte String
+}
+
+model Debit {
+  id Int @default(autoincrement()) @id
+  montant Int
+  soldeApres Int
+  dateExecution DateTime @default(now())
+  compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
+  numeroCompte String
+  livraison BonLivraison @relation(fields: [numeroLivraison], references: [numeroLivraison])
+  numeroLivraison String @unique
+}
+model Compte{
+  numeroCompte String @unique
+  solde Int
+  client Client @relation(fields: [numeroClient], references: [nrClient])
+  numeroClient String @unique
+  versements Versement[]
+  debits Debit[]
+}
 model Article {
   id Int @default(autoincrement()) @id
   numeroArticle String @unique 
@@ -50,6 +77,7 @@ model Client {
   articles ArticleOnClient[]
   bonCommande BonCommande[]
   bonLivraison BonLivraison[]
+  compte Compte?
 }
 
 model ArticleOnClient {
@@ -105,6 +133,7 @@ model BonLivraison {
   facture Facture ?
   chauffeurId String @db.VarChar(20)
   chauffeur chauffeur @relation(fields: [chauffeurId], references: [matricule])
+  debit Debit?
 }
 
 model ArticleOnLivraison {

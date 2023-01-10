@@ -37,6 +37,14 @@ export const numberClientGenerator = () => {
     return clientNumber;
 }
 
+export const numberCompteGenerator = () => {
+    // 3 numbers ----
+    let compteNumber = 'CPT-';
+    for(let i=1; i <=3; i++)
+        compteNumber = compteNumber + Math.floor(Math.random()*10);
+    return compteNumber;
+}
+
 
 export const numberProformatGenerator = () => {
     // 5 numbers ----

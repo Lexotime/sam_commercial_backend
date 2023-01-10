@@ -24,7 +24,8 @@ export class BonLivraisonService {
       id:'desc'
     },
     include:{
-      commerciaux:true
+      commerciaux:true,
+      debit: true
     }
    });
    return bonLivraisons;

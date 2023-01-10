@@ -24,4 +24,7 @@ export class CreateBonLivraisonDto {
 
     @IsNotEmpty()
     bonCommandeId: string;
+
+    @IsNotEmpty()
+    numeroCompte: string;
 }
