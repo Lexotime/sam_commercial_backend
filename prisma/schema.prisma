@@ -25,6 +25,8 @@ model Debit {
   dateExecution DateTime @default(now())
   compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
   numeroCompte String
+  livraison BonLivraison @relation(fields: [numeroLivraison], references: [numeroLivraison])
+  numeroLivraison String @unique
 }
 model Compte{
   numeroCompte String @unique
@@ -131,6 +133,7 @@ model BonLivraison {
   facture Facture ?
   chauffeurId String @db.VarChar(20)
   chauffeur chauffeur @relation(fields: [chauffeurId], references: [matricule])
+  debit Debit?
 }
 
 model ArticleOnLivraison {

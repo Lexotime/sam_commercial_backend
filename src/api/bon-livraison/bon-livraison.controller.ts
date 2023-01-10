@@ -5,16 +5,24 @@ import { UpdateBonLivraisonDto } from './dto/update-bon-livraison.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { numberLivraisonGenerator, numberFactureGenerator } from 'src/utils/number-generator';
 import { FactureService } from '../facture/facture.service';
+import { DebitService } from '../debit/debit.service';
+import { CompteService } from '../compte/compte.service';
+import { ArticleService } from '../article/article.service';
 
 @ApiTags('Bon Livraison')
 @Controller('bon-livraison')
 export class BonLivraisonController {
-  constructor(private readonly bonLivraisonService: BonLivraisonService,private readonly factureservice:FactureService ) {}
+  constructor(private readonly bonLivraisonService: BonLivraisonService,private readonly factureservice:FactureService, private debitService: DebitService, private compteService: CompteService, private articleService: ArticleService) {}
 
   @Post()
   async create(@Res() res, @Body() createBonLivraisonDto: CreateBonLivraisonDto) {
     // init bonLivraison.controller.create
-    let numberFacture
+    let numberFacture, somme = 0;
+    let { numeroCompte } = createBonLivraisonDto;
+    delete createBonLivraisonDto.numeroCompte;
+    let compte = await this.compteService.findOne(numeroCompte);
+    if(!compte)
+      throw new HttpException('CLIENT DOES NOT HAVE AN ACCOUNT', HttpStatus.NOT_FOUND);
     do{  numberFacture = numberFactureGenerator()}
       
     while(await this.factureservice.getfacturebynrfacture(numberFacture))
@@ -32,6 +40,8 @@ export class BonLivraisonController {
     for(let i = 0; i < articles.length; i++){
       let {articleId} = articles[i];
       delete articles[i].articleId;
+      let article = await this.articleService.findOne(articleId);
+      somme = somme + article.prixUnitaire;
       articles[i].article = {
         connect : {numeroArticle: articleId}
       }
@@ -56,9 +66,22 @@ export class BonLivraisonController {
       },
       chauffeur:{
         connect:{matricule:chauffeurId}
+      },
+      debit: {
+        create: {
+          montant: somme,
+          soldeApres: somme + compte.solde,
+          compte: {
+            connect: {
+              numeroCompte
+            }
+          }
+        }
       }
     }
-    const bonLivraison = await this.bonLivraisonService.create(data);
+    const bonLivraison = await this.bonLivraisonService.create(data).then(async () => {
+      await this.compteService.updateSolde(numeroCompte, somme + compte.solde);
+    });
     return res.status(HttpStatus.OK).json({
       bonLivraison
     })
