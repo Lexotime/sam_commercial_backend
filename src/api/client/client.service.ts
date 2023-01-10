@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
 import { numberClientGenerator, numberCompteGenerator } from 'src/utils/number-generator';
+import { CompteService } from '../compte/compte.service';
 import { clientDto, editclientDto } from './dto';
 
 @Injectable()
 export class ClientService {
-    constructor(private prisma:PrismaService){}
+    constructor(private prisma:PrismaService, private compteService: CompteService){}
     async creerclient(dto:clientDto){
         
 
@@ -16,7 +17,7 @@ export class ClientService {
 
             do{
                 dto.numeroCompte = numberCompteGenerator();
-            } while(await this.getclientbynum(dto.nrClient))
+            } while(await this.compteService.findOne(dto.numeroCompte))
          
          const client= await this.prisma.client.create({
              data:{ 

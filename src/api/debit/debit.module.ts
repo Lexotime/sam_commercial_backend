@@ -4,6 +4,7 @@ import { DebitController } from './debit.controller';
 
 @Module({
   controllers: [DebitController],
-  providers: [DebitService]
+  providers: [DebitService],
+  exports: [DebitService]
 })
 export class DebitModule {}

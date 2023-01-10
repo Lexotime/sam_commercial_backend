@@ -4,6 +4,7 @@ import { CompteController } from './compte.controller';
 
 @Module({
   controllers: [CompteController],
-  providers: [CompteService]
+  providers: [CompteService],
+  exports: [CompteService]
 })
 export class CompteModule {}
