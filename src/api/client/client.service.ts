@@ -81,6 +81,15 @@ export class ClientService {
               
         return client
      }
+
+     async getArticleOnClient(numeroClient: any, numeroArticle: any){
+        const article = await this.prisma.articleOnClient.findUnique({
+            where: {
+                articleId_clientId: {articleId: numeroArticle, clientId: numeroClient}
+            }
+        });
+        return article;
+     }
    
      async updateclient(nrClient:string,dto:editclientDto){
          try {
