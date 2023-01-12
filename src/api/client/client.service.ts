@@ -24,10 +24,13 @@ export class ClientService {
             if (dto.isSpecial==true){
                 
                  const articlesbd= await this.prisma.article.findMany() 
-                 for(let i=0;i<=articlesbd.length;i++){
+                 for(let i=0;i < articlesbd.length;i++){
                     let objet={
-                        clientId:dto.nrClient,
-                        articleId:articlesbd[i].numeroArticle,
+                        article: {
+                            connect: {
+                                numeroArticle: articlesbd[i].numeroArticle
+                            }
+                        },
                         prixSpecial:articlesbd[i].prixUnitaire
                     }
                     articles.push(objet)

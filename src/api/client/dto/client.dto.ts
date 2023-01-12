@@ -22,7 +22,6 @@ export class clientDto {
     @IsString()
     @ApiProperty()
     pays     :string
-    @IsEmail()
     @ApiProperty()
     email     :string
     @IsNumber()
