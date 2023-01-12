@@ -14,7 +14,20 @@ export class FactureService {
                 const facture= await this.prisma.facture.findMany({
                     orderBy:{
                         id:'desc'
+                    },
+                   include:{
+                    bonlivraison:{
+                        select:{
+                            articles:{
+                                include:{
+                                    article:true
+                                       
+                                    
+                                }
+                            }
+                        }
                     }
+                   }
                 })
             if (!facture){
                 return []

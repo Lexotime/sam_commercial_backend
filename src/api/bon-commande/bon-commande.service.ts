@@ -25,8 +25,13 @@ export class BonCommandeService {
         id:'desc'
       },
       include:{
-        client:true,
-        commerciaux:true
+        client:{
+          include:{
+            compte:true
+          }
+        },
+        commerciaux:true,
+        
       }
     });
     return bonCommandes;
@@ -37,7 +42,11 @@ export class BonCommandeService {
     const bonCommande = await this.prismaService.bonCommande.findUnique({
       where: {numeroCommande},
       include:{
-        client:true,
+        client:{
+          include:{
+            compte:true
+          }
+        },
         articles:{
           include:{
             article:true
