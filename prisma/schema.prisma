@@ -13,6 +13,8 @@ model Versement {
   id Int @default(autoincrement()) @id
   montant Int
   soldeApres Int
+  versementType String
+  banque String @default("No Bank")
   dateExecution DateTime @default(now())
   versementType String
   banque String @default("No Bank")

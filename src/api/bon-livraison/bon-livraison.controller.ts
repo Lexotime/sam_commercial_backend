@@ -8,11 +8,14 @@ import { FactureService } from '../facture/facture.service';
 import { DebitService } from '../debit/debit.service';
 import { CompteService } from '../compte/compte.service';
 import { ArticleService } from '../article/article.service';
+import { ClientService } from '../client/client.service';
 
 @ApiTags('Bon Livraison')
 @Controller('bon-livraison')
 export class BonLivraisonController {
-  constructor(private readonly bonLivraisonService: BonLivraisonService,private readonly factureservice:FactureService, private debitService: DebitService, private compteService: CompteService, private articleService: ArticleService) {}
+  constructor(private readonly bonLivraisonService: BonLivraisonService,private readonly factureservice:FactureService,
+      private compteService: CompteService, private articleService: ArticleService,
+      private clientService: ClientService) {}
 
   @Post()
   async create(@Res() res, @Body() createBonLivraisonDto: CreateBonLivraisonDto) {
@@ -36,16 +39,31 @@ export class BonLivraisonController {
     delete createBonLivraisonDto.chauffeurId;
     do{createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();}
     while(await this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
-    
-    for(let i = 0; i < articles.length; i++){
-      let {articleId} = articles[i];
-      delete articles[i].articleId;
-      let article = await this.articleService.findOne(articleId);
-      somme = somme + article.prixUnitaire;
-      articles[i].article = {
-        connect : {numeroArticle: articleId}
+
+    const client  = await this.clientService.getclientbynum(createBonLivraisonDto.clientId);
+
+    if(client.isSpecial){
+      for(let i = 0; i < articles.length; i++){
+        let {articleId} = articles[i];
+        delete articles[i].articleId;
+        let article = await this.clientService.getArticleOnClient(createBonLivraisonDto.clientId,articleId);
+        somme = somme + article.prixSpecial * articles[i].quantite;
+        articles[i].article = {
+          connect : {numeroArticle: articleId}
+        }
+      }
+    }else{
+      for(let i = 0; i < articles.length; i++){
+        let {articleId} = articles[i];
+        delete articles[i].articleId;
+        let article = await this.articleService.findOne(articleId);
+        somme = somme + article.prixUnitaire * articles[i].quantite;
+        articles[i].article = {
+          connect : {numeroArticle: articleId}
+        }
       }
     }
+    
     const data = {...createBonLivraisonDto, 
       articles: {
         create : articles

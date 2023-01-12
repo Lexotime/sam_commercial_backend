@@ -6,6 +6,7 @@ import { CompteModule } from '../compte/compte.module';
 @Module({
   imports: [CompteModule],
   providers: [ClientService],
-  controllers: [ClientController]
+  controllers: [ClientController],
+  exports: [ClientService]
 })
 export class ClientModule {}
