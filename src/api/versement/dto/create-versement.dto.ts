@@ -10,6 +10,12 @@ export class CreateVersementDto {
     @ApiProperty()
     montant: string;
 
+    @IsNotEmpty()
+    versementType: string;
+
+    @IsOptional()
+    banque: string;
+
     @IsOptional()
     soldeApres: number;
 }
