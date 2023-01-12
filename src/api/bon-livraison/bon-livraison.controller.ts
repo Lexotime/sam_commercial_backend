@@ -124,6 +124,14 @@ export class BonLivraisonController {
     })
   }
 
+  @Get('historique/:numeroClient')
+  async getHistorique(@Res() res, @Param('numeroClient') numeroClient: string) {
+    const bonLivraison = await this.bonLivraisonService.getHistorique(numeroClient);
+    return res.status(HttpStatus.OK).json({
+      bonLivraison
+    })
+  }
+
   @Patch(':numeroLivraison')
   async update(@Res() res, @Param('numeroLivraison') numeroLivraison: string, @Body() updateBonLivraisonDto: UpdateBonLivraisonDto) {
     const bonLivraison = await this.bonLivraisonService.update(numeroLivraison, updateBonLivraisonDto);

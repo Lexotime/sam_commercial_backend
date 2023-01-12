@@ -71,4 +71,46 @@ export class BonLivraisonService {
    })
    return bonLivraison;
  }
+
+ async getHistorique(numeroClient: any){
+  // get the compte of the client ...
+  const compte = await this.prismaService.compte.findUnique({
+    where: {
+      numeroClient
+    }
+  });
+  // get all bon de livraison ...
+  const bonLivraisons = await this.prismaService.bonLivraison.findMany({
+    where: {
+      clientId: numeroClient
+    }
+  });
+
+  // get all versement ...
+  const versements = await this.prismaService.versement.findMany({
+    where: {
+      numeroCompte: compte.numeroCompte
+    }
+  })
+
+  // merge the both ...
+  let merge = new Array();
+  for(let i=0; i < bonLivraisons.length; i++){
+    merge.push(bonLivraisons[i]);
+  }
+  for(let i=0; i < versements.length; i++){
+    let objet = {
+      numeroLivraison: "",
+      date: versements[i].dateExecution,
+      bonCommandeId: "",
+      clientId: "",
+      commerciauxId: "",
+      chauffeurId: "",
+      debit: versements[i]
+    }
+    merge.push(objet);
+  }
+  // range by date ...
+  return merge;
+ }
 }
