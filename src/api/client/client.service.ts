@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
 import { numberClientGenerator, numberCompteGenerator } from 'src/utils/number-generator';
+import { CreateBonLivraisonDto } from '../bon-livraison/dto/create-bon-livraison.dto';
 import { CompteService } from '../compte/compte.service';
 import { clientDto, editclientDto } from './dto';
 
@@ -11,6 +12,7 @@ export class ClientService {
         
 
         try {
+            let articles=new Array();
             do{
                 dto.nrClient = numberClientGenerator();
             } while(await this.getclientbynum(dto.nrClient))
@@ -18,6 +20,20 @@ export class ClientService {
             do{
                 dto.numeroCompte = numberCompteGenerator();
             } while(await this.compteService.findOne(dto.numeroCompte))
+
+            if (dto.isSpecial==true){
+                
+                 const articlesbd= await this.prisma.article.findMany() 
+                 for(let i=0;i<=articlesbd.length;i++){
+                    let objet={
+                        clientId:dto.nrClient,
+                        articleId:articlesbd[i].numeroArticle,
+                        prixSpecial:articlesbd[i].prixUnitaire
+                    }
+                    articles.push(objet)
+                 }
+            }
+            
          
          const client= await this.prisma.client.create({
              data:{ 
@@ -26,8 +42,11 @@ export class ClientService {
                 compte: {
                     create: {
                         numeroCompte: dto.numeroCompte,
-                        solde: dto.soldeInitial
+                        solde: dto.soldeInitial 
                     }
+                },
+                articles:{
+                    create:articles
                 },
                 nom:dto.nom,  
                 adresse :dto.adresse, 
@@ -36,9 +55,11 @@ export class ClientService {
                 email:dto.email,   
                 telephone :dto.telephone,
                 remise :dto.remise,
-                isSpecial:dto.isSpecial
+                isSpecial:dto.isSpecial,
+                
                  }
          })
+         
             return client
          
         } catch (error) {

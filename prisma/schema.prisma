@@ -16,6 +16,8 @@ model Versement {
   versementType String
   banque String @default("No Bank")
   dateExecution DateTime @default(now())
+  versementType String
+  banque String @default("No Bank")
   compte Compte @relation(fields: [numeroCompte], references: [numeroCompte])
   numeroCompte String
 }
@@ -173,3 +175,4 @@ model chauffeur{
   matricule String @db.VarChar(50) @unique
   bonlivraison BonLivraison[] 
 }
+
