@@ -83,6 +83,9 @@ export class BonLivraisonService {
   const bonLivraisons = await this.prismaService.bonLivraison.findMany({
     where: {
       clientId: numeroClient
+    },
+    include: {
+      debit: true
     }
   });
 
@@ -111,6 +114,9 @@ export class BonLivraisonService {
     merge.push(objet);
   }
   // range by date ...
+  merge.sort((a,b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  })
   return merge;
  }
 }
