@@ -40,13 +40,13 @@ export class BonLivraisonController {
     do{createBonLivraisonDto.numeroLivraison = numberLivraisonGenerator();}
     while(await this.bonLivraisonService.findOne(createBonLivraisonDto.numeroLivraison))
 
-    const client  = await this.clientService.getclientbynum(createBonLivraisonDto.clientId);
+    const client  = await this.clientService.getclientbynum(clientId);
 
     if(client.isSpecial){
       for(let i = 0; i < articles.length; i++){
         let {articleId} = articles[i];
         delete articles[i].articleId;
-        let article = await this.clientService.getArticleOnClient(createBonLivraisonDto.clientId,articleId);
+        let article = await this.clientService.getArticleOnClient(clientId,articleId);
         somme = somme + article.prixSpecial * articles[i].quantite;
         articles[i].article = {
           connect : {numeroArticle: articleId}
@@ -119,6 +119,14 @@ export class BonLivraisonController {
     const bonLivraison = await this.bonLivraisonService.findOne(numeroLivraison);
     if(!bonLivraison)
       throw new HttpException('NOT FOUND', HttpStatus.NOT_FOUND);
+    return res.status(HttpStatus.OK).json({
+      bonLivraison
+    })
+  }
+
+  @Get('historique/:numeroClient')
+  async getHistorique(@Res() res, @Param('numeroClient') numeroClient: string) {
+    const bonLivraison = await this.bonLivraisonService.getHistorique(numeroClient);
     return res.status(HttpStatus.OK).json({
       bonLivraison
     })
