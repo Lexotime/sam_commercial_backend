@@ -112,9 +112,12 @@ export class BonLivraisonService {
     merge.push(bonLivraisons[i]);
   }
   for(let i=0; i < versements.length; i++){
+    let {montant} = versements[i];
+    delete versements[i].montant;
     let objet = {
       numeroLivraison: "",
       date: versements[i].dateExecution,
+      montantVersment:montant,
       bonCommandeId: "",
       clientId: "",
       commerciauxId: "",
