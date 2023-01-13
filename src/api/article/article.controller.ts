@@ -25,6 +25,16 @@ export class ArticleController {
     })
   }
 
+  @Post('many')
+  async createMany(@Body() dto:any,@Res() res) {
+    // init artilce.controller.article
+    const articles = await this.articleService.createmany(dto);
+    return res.status(HttpStatus.OK).json({
+      articles
+    })
+  }
+  
+
   @Get()
   async findAll(@Res() res) {
     // init artilce.controller.article

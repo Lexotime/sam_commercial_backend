@@ -14,6 +14,14 @@ export class ClientController {
         client
       })
     }
+
+    @Post('many')
+    async createmany(@Body() data:any,@Res() res){
+      const clients= await this.clientservice.creermore(data)
+      return res.status(HttpStatus.OK).json({
+        clients
+      })
+    }
     
     @Get('get')
     async getcient(@Res() res){
@@ -23,6 +31,8 @@ export class ClientController {
             clients
           })
     }
+
+
 
     @Get(':nrclient')
     async getbyid(@Param('nrclient') nrclient:string ,@Res() res){
