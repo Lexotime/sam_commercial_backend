@@ -13,6 +13,29 @@ export class ArticleService {
     // init article.service.create
     const article = await this.prismaService.article.create({
       data
+    }).then(async ()=> {
+      const specialClients = await this.prismaService.client.findMany({
+        where: {
+          isSpecial: true
+        }
+      });
+      for(let i=0; i < specialClients.length; i++){
+        await this.prismaService.articleOnClient.create({
+          data: {
+            client: {
+              connect: {
+                nrClient: specialClients[i].nrClient
+              },
+            },
+            article: {
+              connect: {
+                numeroArticle: data.numeroArticle
+              }
+            },
+            prixSpecial: data.prixUnitaire
+          }
+        })
+      }
     })
     return article;
   }
