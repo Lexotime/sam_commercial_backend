@@ -20,6 +20,13 @@ export class ProformatService {
          orderBy:{
           id:'desc'
           
+         },
+         include:{
+          commerciaux:{
+            select:{
+              username:true
+            }
+          }
          }
       });
       return proformat;
@@ -34,7 +41,9 @@ export class ProformatService {
             include:{
               article:true
             }
-          }
+          },
+        
+         
         }
       })
       return proformat;

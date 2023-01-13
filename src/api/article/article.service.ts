@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
-import { Article, Prisma } from '@prisma/client';
+
 
 @Injectable()
 export class ArticleService {
@@ -15,6 +15,16 @@ export class ArticleService {
       data
     })
     return article;
+  }
+
+  async createmany(data : any) {
+    let  article=new Array()
+    // init article.service.create
+    for (let i=0;i<data.length;i++){
+      article.push(this.create(data[i]))
+      
+    }
+    return article
   }
 
   async findAll() {

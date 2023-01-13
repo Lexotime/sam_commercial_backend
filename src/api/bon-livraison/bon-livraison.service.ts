@@ -25,7 +25,12 @@ export class BonLivraisonService {
     },
     include:{
       commerciaux:true,
-      debit: true
+      debit: true,
+      chauffeur:{
+        select:{
+          nomChauffeur:true
+        }
+      }
     }
    });
    return bonLivraisons;
@@ -49,7 +54,12 @@ export class BonLivraisonService {
       ,
       client:true,
       commerciaux:true,
-      chauffeur:true
+      chauffeur:true,
+      debit:{
+        select:{
+          montant:true
+        }
+      }
      }
    })
    return bonLivraison;
