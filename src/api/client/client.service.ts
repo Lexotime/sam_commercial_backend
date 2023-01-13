@@ -73,12 +73,12 @@ export class ClientService {
      }
 
      async creermore(data:any){
-        let client=new Array()
+        
        for(let i=0;i<data.length;i++){
-        client.push(this.creerclient(data[i]))
+            await this.creerclient(data[i])   
         
        }
-       return client
+       
        
        
      }
