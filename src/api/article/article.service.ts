@@ -18,13 +18,12 @@ export class ArticleService {
   }
 
   async createmany(data : any) {
-    let  article=new Array()
     // init article.service.create
     for (let i=0;i<data.length;i++){
-      article.push(this.create(data[i]))
+      await this.create(data[i])
       
     }
-    return article
+    
   }
 
   async findAll() {
