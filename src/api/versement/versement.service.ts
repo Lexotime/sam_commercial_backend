@@ -15,7 +15,7 @@ export class VersementService {
     const compte = await this.compteService.findOne(numeroCompte);
     if(!compte)
       throw new HttpException('CLIENT DOES NOT HAVE AN ACCOUNT', HttpStatus.NOT_FOUND);
-    createVersementDto.soldeApres = compte.solde + createVersementDto.montant;
+    createVersementDto.soldeApres = compte.solde - createVersementDto.montant;
     const versement = await this.prismaService.versement.create({
       data: {
         ...createVersementDto,
