@@ -65,6 +65,8 @@ export class FactureService {
                     }
                 }
             });
+            if(!facture)
+                return null;
             if(facture.bonlivraison.client.isSpecial){
                 for(let i=0; i < facture.bonlivraison.articles.length; i++){
                     const article = await this.prisma.articleOnClient.findUnique({
