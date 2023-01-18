@@ -25,9 +25,9 @@ export class clientDto {
     @ApiProperty()
     @IsString()
     email     :string
-    @IsNumber()
+    @IsString()
     @ApiProperty()
-    telephone :number
+    telephone :string
     @IsNumber()
     @ApiProperty()
     remise    :number
