@@ -64,13 +64,18 @@ export class FactureService {
                         }
                     }
                 }
-    
-              
-                 })
-                 if(!facture){
-                    return null
-                 }
-           return facture
+            });
+            if(facture.bonlivraison.client.isSpecial){
+                for(let i=0; i < facture.bonlivraison.articles.length; i++){
+                    const article = await this.prisma.articleOnClient.findUnique({
+                        where: {
+                            articleId_clientId: {articleId: facture.bonlivraison.articles[i].articleId, clientId: facture.bonlivraison.client.nrClient}
+                        }
+                    });
+                    facture.bonlivraison.articles[i].article.prixUnitaire = article.prixSpecial;
+                }
+            }
+           return facture;
         }
       
         async updatefacture(numerofacture:string,dto:editfacturedto){
