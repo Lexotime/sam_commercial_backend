@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { PrismaService } from 'src/external-service/prisma/prisma.service';
@@ -96,6 +96,13 @@ export class ArticleService {
 
   async remove(numeroArticle: string) {
     // init article.service.remove
+    const commandes = await this.prismaService.articleOnCommande.findMany({
+      where: {
+        articleId: numeroArticle
+      }
+    });
+    if(commandes)
+      throw new HttpException("Cette commande ne peut pas supprimer !", HttpStatus.CONFLICT);
     const article = await this.prismaService.article.delete({
       where: {numeroArticle}
     })
