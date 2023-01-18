@@ -20,14 +20,21 @@ export class FactureService {
                         select:{
                             articles:{
                                 include:{
-                                    article:true
-                                       
-                                    
+                                    article:true 
+                                },
+                                
+                                
+                            
+                            },
+                            client:{
+                                select:{
+                                    nom:true
                                 }
                             }
                         }
                     }
-                   }
+                   
+                }
                 })
             if (!facture){
                 return []
