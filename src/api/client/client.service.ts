@@ -131,7 +131,7 @@ export class ClientService {
          try {
              const client=this.prisma.client.update({
                  where:{nrClient},
-
+                
                  data:{
                    ...dto
                  }
