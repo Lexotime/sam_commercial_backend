@@ -22,8 +22,8 @@ export class editclientDto {
     @IsEmail()
     email  ?   :string
     @IsOptional()
-    @IsNumber()
-    telephone ? :number
+    @IsString()
+    telephone ? :string
     @IsOptional()
     @IsNumber()
     remise  ?   :number
