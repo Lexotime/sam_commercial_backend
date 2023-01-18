@@ -83,7 +83,7 @@ model Client {
 }
 
 model ArticleOnClient {
-  article Article @relation(fields: [articleId], references: [numeroArticle])
+  article Article @relation(fields: [articleId], references: [numeroArticle], onDelete: Cascade)
   articleId String @db.VarChar(20)
   client Client @relation(fields: [clientId], references: [nrClient])
   clientId String @db.VarChar(20)
