@@ -73,7 +73,7 @@ model Client {
   ville     String @db.VarChar(20)
   pays      String @db.VarChar(20)
   email     String @unique
-  telephone Int
+  telephone Float
   remise    Int
   isSpecial Boolean @default(false)
   articles ArticleOnClient[]
