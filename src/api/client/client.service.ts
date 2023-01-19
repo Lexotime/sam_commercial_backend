@@ -45,7 +45,8 @@ export class ClientService {
                 compte: {
                     create: {
                         numeroCompte: dto.numeroCompte,
-                        solde: dto.soldeInitial? dto.soldeInitial:0 
+                        solde: dto.soldeInitial? dto.soldeInitial:0,
+                        soldeInitial: dto.soldeInitial? dto.soldeInitial:0
                     }
                 },
                 articles:{
@@ -142,6 +143,7 @@ export class ClientService {
              return client
              
          } catch (error) {
+            console.log(error);
              throw new Error('client non modifie')
          }
         
