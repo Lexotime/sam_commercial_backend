@@ -21,6 +21,7 @@ export class BonLivraisonController {
   async create(@Res() res, @Body() createBonLivraisonDto: CreateBonLivraisonDto) {
     // init bonLivraison.controller.create
     let numberFacture, somme = 0;
+    let articleFacture = new Array();
     let { numeroCompte } = createBonLivraisonDto;
     delete createBonLivraisonDto.numeroCompte;
     let compte = await this.compteService.findOne(numeroCompte);
@@ -47,6 +48,7 @@ export class BonLivraisonController {
         let {articleId} = articles[i];
         delete articles[i].articleId;
         let article = await this.clientService.getArticleOnClient(clientId,articleId);
+        articleFacture.push({articleId: article.articleId, prixUnitaire: article.prixSpecial});
         somme = somme + article.prixSpecial * articles[i].quantite;
         articles[i].article = {
           connect : {numeroArticle: articleId}
@@ -57,6 +59,7 @@ export class BonLivraisonController {
         let {articleId} = articles[i];
         delete articles[i].articleId;
         let article = await this.articleService.findOne(articleId);
+        articleFacture.push({articleId: article.numeroArticle, prixUnitaire: article.prixUnitaire});
         somme = somme + article.prixUnitaire * articles[i].quantite;
         articles[i].article = {
           connect : {numeroArticle: articleId}
@@ -79,7 +82,8 @@ export class BonLivraisonController {
       },
       facture: {
         create: {
-          numerofacture: numberFacture
+          numerofacture: numberFacture,
+          articles: articleFacture
         }
       },
       chauffeur:{

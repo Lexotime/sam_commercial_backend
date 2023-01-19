@@ -32,7 +32,7 @@ model Debit {
 }
 model Compte{
   numeroCompte String @unique
-  solde Int
+  solde Int @default(0)
   client Client @relation(fields: [numeroClient], references: [nrClient])
   numeroClient String @unique
   versements Versement[]
@@ -73,6 +73,7 @@ model Client {
   ville     String @db.VarChar(20)
   pays      String @db.VarChar(20)
   email     String @unique
+  enCours   Int
   telephone String 
   remise    Int
   isSpecial Boolean @default(false)
@@ -95,6 +96,7 @@ model Facture{
  id  Int @id @default(autoincrement())
  numerofacture String  @unique
  createdDate DateTime @default(now())
+ articles Json
  bonlivraisonid String @unique @db.VarChar(20)
  bonlivraison BonLivraison @relation(fields: [bonlivraisonid],references: [numeroLivraison])
 }
