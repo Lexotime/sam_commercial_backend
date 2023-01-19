@@ -22,6 +22,7 @@ export class ChauffeurService {
             return chauffeur
          
         } catch (error) {
+            console.log(error);
          throw new Error("client non cree");
          
          
