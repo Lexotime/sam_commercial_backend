@@ -45,7 +45,7 @@ export class ClientService {
                 compte: {
                     create: {
                         numeroCompte: dto.numeroCompte,
-                        solde: dto.soldeInitial 
+                        solde: dto.soldeInitial? dto.soldeInitial:0 
                     }
                 },
                 articles:{
@@ -66,6 +66,7 @@ export class ClientService {
             return client
          
         } catch (error) {
+            console.log(error);
          throw new Error("client non cree");
          
          
