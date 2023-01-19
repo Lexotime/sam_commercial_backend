@@ -36,5 +36,9 @@ export class clientDto {
 
     @ApiProperty()
     @IsNotEmpty()
+    enCours: number
+
+    @ApiProperty()
+    @IsNotEmpty()
     soldeInitial: number
 }

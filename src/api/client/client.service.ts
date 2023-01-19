@@ -58,6 +58,7 @@ export class ClientService {
                 email:dto.email,   
                 telephone :dto.telephone,
                 remise :dto.remise,
+                enCours: dto.enCours,
                 isSpecial:dto.isSpecial,
                 
                  }
