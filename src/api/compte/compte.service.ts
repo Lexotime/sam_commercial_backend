@@ -46,6 +46,18 @@ export class CompteService {
     return updatedCompte;
   }
 
+  async updateSoldeInitial(numeroCompte: any, newSolde: any) {
+    const updatedCompte = await this.prismaService.compte.update({
+      where: {
+        numeroCompte
+      },
+      data: {
+        soldeInitial: newSolde
+      }
+    });
+    return updatedCompte;
+  }
+
   remove(id: number) {
     return `This action removes a #${id} compte`;
   }
