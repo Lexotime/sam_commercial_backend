@@ -35,7 +35,7 @@ export class clientDto {
     isSpecial:boolean
 
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     enCours: number
 
     @ApiProperty()
