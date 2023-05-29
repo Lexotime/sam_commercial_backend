@@ -93,7 +93,7 @@ export class BonCommandeController {
   async calcul_vol(@Res() res, @Param('numeroCommande') numeroCommande: string){
      let articles=await this.bonCommandeService.calcul_volume(numeroCommande)
      for (let i=0;i<=articles.length;i++){
-         var volume =+calcul(articles[i].article.dimension,articles[i].quantite)
+         var volume =+calcul(articles[i].article.designation,articles[i].quantite)
      }
     return res.status(HttpStatus.OK).json({
         volume
