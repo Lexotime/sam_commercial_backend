@@ -4,6 +4,8 @@ import { CreateBonCommandeDto } from './dto/create-bon-commande.dto';
 import { UpdateBonCommandeDto } from './dto/update-bon-commande.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { numberOrderGenerator } from '../../utils/number-generator';
+import { calcul } from '../../utils/calcul-volume';
+
 
 @ApiTags('Bon Commande')
 @Controller('bon-commande')
@@ -85,4 +87,17 @@ export class BonCommandeController {
       bonCommande
     })
   }
+
+
+  @Get(':numeroCommande')
+  async calcul_vol(@Res() res, @Param('numeroCommande') numeroCommande: string){
+     let articles=await this.bonCommandeService.calcul_volume(numeroCommande)
+     for (let i=0;i<=articles.length;i++){
+         var volume =+calcul(articles[i].article.dimension,articles[i].quantite)
+     }
+    return res.status(HttpStatus.OK).json({
+        volume
+    })
+  }
 }
+ 
