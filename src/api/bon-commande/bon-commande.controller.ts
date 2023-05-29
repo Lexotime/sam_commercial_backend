@@ -76,7 +76,7 @@ export class BonCommandeController {
     })
   }
 
-  @Patch('article/update/')
+  @Patch('article/update')
   async updateCommande(@Res() res, @Body() body){
     const {articles, numeroCommande} = body;
     const toBeSent = await this.bonCommandeService.updateBonCommande(numeroCommande, articles);

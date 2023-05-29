@@ -110,7 +110,6 @@ export class BonCommandeService {
             quantite: matchingListArticle.quantity,
           },
         });
-        return updated;
       } else {
         const deleted = await this.prismaService.articleOnCommande.delete({
           where: {
@@ -120,9 +119,9 @@ export class BonCommandeService {
             },
           },
         });
-        return deleted;
       }
     }
+    return bonCommande;
   }
   
   
