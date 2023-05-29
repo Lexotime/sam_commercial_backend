@@ -110,6 +110,7 @@ model BonCommande {
   articles ArticleOnCommande[]
   bonLivraison BonLivraison[]
   commerciauxId Int
+  status string @default("attente")
   commerciaux Commerciaux @relation(fields: [commerciauxId], references: [id])
 }
 
@@ -137,6 +138,7 @@ model BonLivraison {
   facture Facture ?
   chauffeurId String @db.VarChar(20)
   chauffeur chauffeur @relation(fields: [chauffeurId], references: [matricule])
+  status @default("attente")
   debit Debit?
 }
 
