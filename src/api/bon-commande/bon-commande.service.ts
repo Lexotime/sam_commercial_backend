@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateBonCommandeDto } from './dto/create-bon-commande.dto';
 import { UpdateBonCommandeDto } from './dto/update-bon-commande.dto';
 import { BonCommande, Prisma } from '@prisma/client';
@@ -79,6 +79,52 @@ export class BonCommandeService {
     return bonCommande
 
   }
+
+  async updateBonCommande(numeroCommande: any, listArticles: any) {
+    const bonCommande = await this.prismaService.bonCommande.findUnique({
+      where: { numeroCommande },
+    });
+  
+    if (!bonCommande) {
+      throw new HttpException("NO BON DE COMMANDE FOUND !", HttpStatus.NOT_FOUND);
+    }
+  
+    const articles = await this.prismaService.articleOnCommande.findMany({
+      where: { commandeId: numeroCommande },
+    });
+  
+    for (const article of articles) {
+      const matchingListArticle = listArticles.find(
+        (listArticle) => listArticle.articleId === article.articleId
+      );
+  
+      if (matchingListArticle) {
+        const updated = await this.prismaService.articleOnCommande.update({
+          where: {
+            articleId_commandeId: {
+              articleId: article.articleId,
+              commandeId: numeroCommande,
+            },
+          },
+          data: {
+            quantite: matchingListArticle.quantity,
+          },
+        });
+        return updated;
+      } else {
+        const deleted = await this.prismaService.articleOnCommande.delete({
+          where: {
+            articleId_commandeId: {
+              articleId: article.articleId,
+              commandeId: numeroCommande,
+            },
+          },
+        });
+        return deleted;
+      }
+    }
+  }
+  
   
 
   async remove(numeroCommande: string) {
