@@ -133,4 +133,16 @@ export class BonCommandeService {
     })
     return bonCommande;
   }
+
+  async calcul_volume(numeroCommande:string){
+
+    const articleOnCommande = this.prismaService.articleOnCommande.findMany({
+      where:{commandeId:numeroCommande},
+      include:{
+        article:true
+      }
+    })
+    return articleOnCommande
+  }
 }
+

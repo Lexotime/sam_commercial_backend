@@ -48,7 +48,6 @@ model Article {
   stock Int
   epaisseur Int
   imageUrl String  
-  dimension String  @db.VarChar(20)
   commande ArticleOnCommande[]
   proformat ArticleOnProformat[]
   livraison ArticleOnLivraison[]
