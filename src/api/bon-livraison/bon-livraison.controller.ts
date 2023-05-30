@@ -102,6 +102,7 @@ export class BonLivraisonController {
       }
     }
     const bonLivraison = await this.bonLivraisonService.create(data).then(async () => {
+      await this.bonLivraisonService.updateCommande(bonCommandeId);
       await this.compteService.updateSolde(numeroCompte, somme + compte.solde);
     });
     return res.status(HttpStatus.OK).json({
@@ -113,6 +114,15 @@ export class BonLivraisonController {
   async findAll(@Res() res) {
     // init bonLivraison.controller.findAll
     const bonLivraisons = await this.bonLivraisonService.findAll();
+    return res.status(HttpStatus.OK).json({
+      bonLivraisons
+    })
+  }
+
+  @Patch('status/:numeroLivraison')
+  async updateStatus(@Res() res, @Param('numeroLivraison') numeroLivraison) {
+    // init bonLivraison.controller.findAll
+    const bonLivraisons = await this.bonLivraisonService.updateLivraison(numeroLivraison);
     return res.status(HttpStatus.OK).json({
       bonLivraisons
     })
