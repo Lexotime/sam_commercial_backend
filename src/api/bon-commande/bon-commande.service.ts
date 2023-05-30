@@ -107,7 +107,7 @@ export class BonCommandeService {
             },
           },
           data: {
-            quantite: matchingListArticle.quantity,
+            quantite: matchingListArticle.quantite,
           },
         });
       } else {
