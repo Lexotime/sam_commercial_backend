@@ -46,6 +46,7 @@ model Article {
   marque String @db.VarChar(20)
   prixUnitaire Int
   stock Int
+  dimension String
   epaisseur Int
   imageUrl String  
   commande ArticleOnCommande[]

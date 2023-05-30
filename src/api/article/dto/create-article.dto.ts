@@ -29,7 +29,7 @@ export class CreateArticleDto {
     @ApiProperty()
     imageUrl: string;
 
-    @IsNotEmpty()
+
     @ApiProperty()
     dimension: string; 
 }
