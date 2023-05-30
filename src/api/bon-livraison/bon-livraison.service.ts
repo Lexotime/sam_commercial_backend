@@ -17,6 +17,25 @@ export class BonLivraisonService {
    return bonLivraison;
  }
 
+ async updateLivraison(numeroLivraison: any){
+  const livraision = await this.prismaService.bonLivraison.update({
+    where: {numeroLivraison},
+    data: {
+      status: "termine"
+    }
+  });
+  return livraision;
+ }
+
+ async updateCommande(numeroCommande: any){
+  await this.prismaService.bonCommande.update({
+    where: {numeroCommande},
+    data: {
+      status: "termine"
+    }
+  });
+ }
+
  async findAll() {
    // init bonLivraison.service.findAll
    const bonLivraisons = await this.prismaService.bonLivraison.findMany({
