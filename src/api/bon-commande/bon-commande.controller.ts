@@ -102,7 +102,7 @@ export class BonCommandeController {
          var volume =+calcul(articles[i].article.designation,articles[i].quantite)
      }
     return res.status(HttpStatus.OK).json({
-        volume
+        volume: Math.round(volume)
     })
   }
 }
